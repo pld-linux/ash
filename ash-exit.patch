@@ -1,0 +1,25 @@
+--- ash-linux-0.2/eval.c.exit	Wed Mar 29 15:43:37 2000
++++ ash-linux-0.2/eval.c	Wed Mar 29 15:39:29 2000
+@@ -206,12 +206,14 @@
+ 		break;
+ 	case NAND:
+ 		evaltree(n->nbinary.ch1, EV_TESTED);
++		flags |= EV_TESTED;
+ 		if (evalskip || exitstatus != 0)
+ 			goto out;
+ 		evaltree(n->nbinary.ch2, flags);
+ 		break;
+ 	case NOR:
+ 		evaltree(n->nbinary.ch1, EV_TESTED);
++		flags |= EV_TESTED;
+ 		if (evalskip || exitstatus == 0)
+ 			goto out;
+ 		evaltree(n->nbinary.ch2, flags);
+@@ -232,6 +234,7 @@
+ 		int status = 0; 
+ 
+ 		evaltree(n->nif.test, EV_TESTED);
++		flags |= EV_TESTED;
+ 		if (evalskip)
+ 			goto out;
+ 		if (exitstatus == 0) {

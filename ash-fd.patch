@@ -1,0 +1,19 @@
+--- ash-linux-0.2/parser.c.foo	Sat Sep 11 17:33:40 1999
++++ ash-linux-0.2/parser.c	Sat Sep 11 17:36:02 1999
+@@ -552,15 +552,11 @@
+ 		}
+ 	} else if (n->type == NTOFD || n->type == NFROMFD) {
+ 		if (is_digit(wordtext[0]))
+-			n->ndup.dupfd = digit_val(wordtext[0]);
++			n->ndup.dupfd = atoi(wordtext);
+ 		else if (wordtext[0] == '-')
+ 			n->ndup.dupfd = -1;
+ 		else
+-			goto bad;
+-		if (wordtext[1] != '\0') {
+-bad:
+ 			synerror("Bad fd number");
+-		}
+ 	} else {
+ 		n->nfile.fname = (union node *)stalloc(sizeof (struct narg));
+ 		n = n->nfile.fname;

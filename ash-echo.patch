@@ -1,0 +1,17 @@
+--- ash-linux-0.2/bltin/echo.c.foo	Sat Sep 11 23:55:02 1999
++++ ash-linux-0.2/bltin/echo.c	Sat Sep 11 23:57:48 1999
+@@ -63,7 +63,13 @@
+ 	if (argc)
+ 		ap++;
+ 	if ((p = *ap) != NULL) {
+-		if (equal(p, "-n")) {
++		if (equal(p,"-en") || equal(p,"-ne")) {
++			nflag++;
++#ifndef eflag
++			eflag++;
++#endif
++			ap++;
++		} else  if (equal(p, "-n")) {
+ 			nflag++;
+ 			ap++;
+ 		} else if (equal(p, "-e")) {
