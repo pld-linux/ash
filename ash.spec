@@ -8,7 +8,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	3
+Release:	4
 License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
