@@ -19,7 +19,7 @@ Summary(zh_CN):	[ÏµÍ³]BerkeleyµÄÎ¢ÐÍBourne Shell
 Summary(zh_TW):	[-A¨t$)B²Î]Berkeleyªº-A·L$)B«¬Bourne Shell
 Name:		ash
 Version:	0.4.0
-Release:	9
+Release:	10
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
