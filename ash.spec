@@ -1,6 +1,7 @@
-# conditional build
-# --without static
-# --with dietlibc (link with dietlibc, implies --without static)
+#
+# Conditional build
+# --without static	- don't build static
+# --with dietlibc	- link with dietlibc, implies --without static)
 # Branch: HEAD
 
 %{?_with_dietlibc:%define _without_static 1}
@@ -18,7 +19,7 @@ Summary(zh_CN):	[ÏµÍ³]BerkeleyµÄÎ¢ÐÍBourne Shell
 Summary(zh_TW):	[-A¨t$)B²Î]Berkeleyªº-A·L$)B«¬Bourne Shell
 Name:		ash
 Version:	0.4.0
-Release:	8
+Release:	9
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
