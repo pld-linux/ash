@@ -8,7 +8,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	7
+Release:	8
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
