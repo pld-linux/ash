@@ -4,7 +4,7 @@ Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a 
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
-Version:	0.3
+Version:	0.3.1
 Release:	1
 License:	BSD
 Group:		Applications/Shells
