@@ -45,10 +45,10 @@ Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
 Patch21:	%{name}-dietlibc.patch
-%{!?_without_static:BuildRequires:	glibc-static}
-%{?_with_dietlibc:BuildRequires:	dietlibc-static}
 BuildRequires:	byacc
+%{?_with_dietlibc:BuildRequires:	dietlibc-static}
 BuildRequires:	flex
+%{!?_without_static:BuildRequires:	glibc-static}
 Requires(post,preun,verify):	grep
 Requires(preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -177,8 +177,8 @@ avantajýna sahiptir.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
+
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
 %{!?_without_static:install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static}
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
