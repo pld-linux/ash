@@ -50,15 +50,6 @@ diff -urN netbsd-sh/eval.c ash-0.3.7.orig/eval.c
  		defun(n->narg.text, n->narg.next);
  		exitstatus = 0;
  		break;
-@@ -279,7 +288,7 @@
- out:
- 	if (pendingsigs)
- 		dotrap();
--	if ((flags & EV_EXIT) || (eflag && exitstatus && !(flags & EV_TESTED)))
-+	if (flags & EV_EXIT)
- 		exitshell(exitstatus);
- }
- 
 @@ -497,9 +507,14 @@
  				close(0);
  				copyfd(prevfd, 0);
