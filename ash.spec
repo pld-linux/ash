@@ -14,7 +14,7 @@ Patch0:       	ash-make.patch
 Patch1:		ash-mknodes.patch
 Prereq:      	fileutils
 Prereq:		grep
-Buildroot:   	/tmp/%{name}-%{version}-root
+BuildRoot:	/tmp/%{name}-%{version}-root
 Conflicts:   	mkinitrd <= 1.7
 
 %description
