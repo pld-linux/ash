@@ -68,7 +68,7 @@ Standard-Bourne-Shell- Befehle unterstützt und dennoch erheblich
 weniger Platz beansprucht als bash.
 
 %description -l es
-ash es un clone del shell bourne de Berkeley. Soporta todos los
+Ash es un clon del shell bourne de Berkeley. Soporta todos los
 comandos padrón de la Bourne shell y tiene la ventaja de soportarlos
 con un tamaño considerablemente menor del que bash.
 
