@@ -1,6 +1,10 @@
 # conditional build
 # --without static
+# --with dietlibc (link with dietlibc, implies --without static)
 # Branch: HEAD
+
+%{?_with_dietlibc:%define _without_static 1}
+
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
@@ -35,6 +39,7 @@ Patch17:	%{name}-debian.patch
 Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
+%{?_with_dietlibc:Patch21:	%{name}-dietlibc.patch}
 PreReq:		fileutils
 PreReq:		grep
 %{!?_without_static:BuildRequires:	glibc-static}
@@ -144,8 +149,11 @@ avantajýna sahiptir.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%{?_with_dietlibc:%patch21 -p1}
 
 %build
+
+%{?_with_dietlibc:%define __cc %{_arch}-dietlibc-gcc}
 
 %{!?_without_static:%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"}
 %{!?_without_static:mv -f sh ash.static}
