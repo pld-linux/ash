@@ -159,7 +159,7 @@ Version for bootdisk
 # and it is not necessary
 %{__make} mksignames mkbuiltins mknodes mksignames mksyntax mktokens
 %{__make} \
-	OPT_FLAGS="-m386 -I/usr/lib/bootdisk%{_includedir} -Os" \
+	OPT_FLAGS="-I/usr/lib/bootdisk%{_includedir} -Os" \
 	LDFLAGS="-nostdlib %{rpmldflags}" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
 mv -f sh ash.BOOT
