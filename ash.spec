@@ -5,10 +5,10 @@ Summary(pl): Ma³y shell bourne'a
 Summary(tr): Ufak bir bourne kabuðu
 Name:        ash
 Version:     0.2
-Release:     13
+Release:     14
 Copyright:   BSD
 Group:       Shells
-Source:      ftp://sunsite.unc.edu:/pub/Linux/system/Shells/ash-linux-%{version}.tar.gz
+Source:      ftp://sunsite.unc.edu:/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
 Patch:       ash-make.patch
 Prereq:      fileutils, grep
 Buildroot:   /tmp/%{name}-%{version}-root
@@ -96,6 +96,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(644, root,  man) /usr/man/man1/*
 
 %changelog
+* Fri Nov 06 1998 Preston Brown <pbrown@redhat.com>
+  [0.2-14]
+- updated to correct path on SunSITE.
+
 * Sun Sep 27 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [0.2-13]
 - added -q %setup parameter,
@@ -103,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT
 - bsh(1) man page is now maked as nroff include to ash(1) instead
   making sym link to ash.1 (this allow compress man pages in future).
 
-* Mon Jun 29 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+* Mon Jun 29 1998 Wojtek Slusarczyk <wojtek@shadow.eu.org>
 - added pl translation.
 
 * Tue May 05 1998 Prospector System <bugs@redhat.com>
