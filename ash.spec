@@ -14,7 +14,7 @@ Patch0:       	ash-make.patch
 Patch1:		ash-mknodes.patch
 Prereq:      	fileutils
 Prereq:		grep
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:   	mkinitrd <= 1.7
 
 %description
@@ -121,7 +121,6 @@ else
         fi
 fi
 
-
 %preun
 if [ "$0" = 0 ]; then
         grep -v /bin/ash /etc/shells | grep -v /bin/bsh | grep -v /bin/ash.static > /etc/shells.new
@@ -133,7 +132,6 @@ if [ "$0" = 0 ]; then
         grep -v /bin/ash /etc/shells | grep -v /bin/bsh > /etc/shells.new
         mv /etc/shells.new /etc/shells
 fi
-
 
 %verifyscript
 for n in ash bsh ash.static; do
