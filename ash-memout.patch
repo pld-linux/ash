@@ -34,42 +34,6 @@ diff -u ash-0.4.0/eval.c ash-0.4.0-/eval.c
  	} else {
  #ifdef DEBUG
  		trputs("normal command:  ");  trargs(argv);
-diff -u ash-0.4.0/eval.c.orig ash-0.4.0-/eval.c.orig
---- ash-0.4.0/eval.c.orig	Tue Apr 24 00:53:12 2001
-+++ ash-0.4.0-/eval.c.orig	Tue Apr 24 00:13:57 2001
-@@ -878,9 +878,13 @@
- #endif
- 		mode = (cmdentry.u.index == EXECCMD)? 0 : REDIR_PUSH;
- 		if (flags == EV_BACKCMD) {
-+#ifdef _GNU_SOURCE
-+			openmemout();
-+#else
- 			memout.nleft = 0;
- 			memout.nextc = memout.buf;
- 			memout.bufsize = 64;
-+#endif
- 			mode |= REDIR_BACKQ;
- 		}
- 		redirect(cmd->ncmd.redirect, mode);
-@@ -927,10 +931,18 @@
- 		if (cmdentry.u.index != EXECCMD)
- 			popredir();
- 		if (flags == EV_BACKCMD) {
-+#ifdef _GNU_SOURCE
-+			closememout();
-+#endif
- 			backcmd->buf = memout.buf;
-+#ifdef _GNU_SOURCE
-+			backcmd->nleft = memout.bufsize;
-+#else
- 			backcmd->nleft = memout.nextc - memout.buf;
-+#endif
- 			memout.buf = NULL;
- 		}
-+		cmdenviron = NULL;
- 	} else {
- #ifdef DEBUG
- 		trputs("normal command:  ");  trargs(argv);
 Common subdirectories: ash-0.4.0/funcs and ash-0.4.0-/funcs
 diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
 --- ash-0.4.0/output.c	Fri Jan 12 17:50:39 2001
