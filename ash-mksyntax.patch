@@ -1,0 +1,26 @@
+The code in question had undefined behaviour in C.
+
+--- ash-linux-0.2/mksyntax.c.jj	Tue Aug 24 11:12:52 1993
++++ ash-linux-0.2/mksyntax.c	Wed Jun 21 08:43:03 2000
+@@ -107,7 +107,7 @@ int digit_contig;	/* true if digits are 
+ 
+ main() {
+ 	char c;
+-	char d;
++	unsigned char d, e;
+ 	int sign;
+ 	int i;
+ 	char buf[80];
+@@ -132,9 +132,10 @@ main() {
+ 		sign = 1;
+ 	else
+ 		sign = 0;
+-	for (nbits = 1 ; ; nbits++) {
++	e = -1;
++	for (nbits = 1 ; nbits < 31; nbits++) {
+ 		d = (1 << nbits) - 1;
+-		if (d == c)
++		if (d == e)
+ 			break;
+ 	}
+ 	printf("%s %d bit chars\n", sign? "signed" : "unsigned", nbits);
