@@ -1,39 +1,40 @@
-Summary:     	Small bourne shell from Berkeley
-Summary(de): 	Kleine Bourne-Shell von Berkeley
-Summary(fr): 	Shell Bourne réduit de Berkeley
+Summary:	Small bourne shell from Berkeley
+Summary(de):	Kleine Bourne-Shell von Berkeley
+Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a 
 Summary(tr):	Ufak bir bourne kabuðu
-Name:        	ash
-Version:     	0.2
-Release:     	18
-Copyright:   	BSD
-Group:       	Shells
+Name:		ash
+Version:	0.2
+Release:	18
+License:	BSD
+Group:		Shells
 Group(pl):	Pow³oki
-Source:      	ftp://sunsite.unc.edu/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
-Patch0:       	ash-make.patch
+Source0:	ftp://sunsite.unc.edu/pub/Linux/system/shells/%{name}-linux-%{version}.tar.gz
+Patch0:		ash-make.patch
 Patch1:		ash-mknodes.patch
-Prereq:      	fileutils
+Prereq:		fileutils
 Prereq:		grep
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Conflicts:   	mkinitrd <= 1.7
+Conflicts:	mkinitrd <= 1.7
 
 %description
-ash is a bourne shell clone from Berkeley.  It supports all of the standard
-Bourne shell commands and has the advantage of supporting them while 
-remaining considerably smaller than bash. 
+ash is a bourne shell clone from Berkeley. It supports all of the
+standard Bourne shell commands and has the advantage of supporting
+them while remaining considerably smaller than bash.
 
 %description -l de
-ash ist ein Bourne-Shell-Clone aus Berkeley, der alle Standard-Bourne-Shell-
-Befehle unterstützt und dennoch erheblich weniger Platz beansprucht als bash. 
+ash ist ein Bourne-Shell-Clone aus Berkeley, der alle
+Standard-Bourne-Shell- Befehle unterstützt und dennoch erheblich
+weniger Platz beansprucht als bash.
 
 %description -l fr
-ash est un clone Berkeley du shell Bourne. Il gère toutes les commandes
-standard du shell Bourne et a l'avantage de les gérer tout en restant
-considérablement plus petit que bash.
+ash est un clone Berkeley du shell Bourne. Il gère toutes les
+commandes standard du shell Bourne et a l'avantage de les gérer tout
+en restant considérablement plus petit que bash.
 
 %description -l pl
-Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe komendy
-shell'a Bourne'a i jest mniejszy ni¿ bash. 
+Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe
+komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
 
 %description -l tr
 ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
@@ -41,34 +42,35 @@ komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
 %package static
-Summary:     	Small bourne shell from Berkeley
-Summary(de): 	Kleine Bourne-Shell von Berkeley
-Summary(fr): 	Shell Bourne réduit de Berkeley
+Summary:	Small bourne shell from Berkeley
+Summary(de):	Kleine Bourne-Shell von Berkeley
+Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a 
 Summary(tr):	Ufak bir bourne kabuðu
-Group:       	Shells
+Group:		Shells
 Group(pl):	Pow³oki
-Prereq:      	fileutils
+Prereq:		fileutils
 Prereq:		grep
-Conflicts:   	mkinitrd <= 1.7
+Conflicts:	mkinitrd <= 1.7
 
 %description static
-ash is a bourne shell clone from Berkeley.  It supports all of the standard
-Bourne shell commands and has the advantage of supporting them while 
-remaining considerably smaller than bash. 
+ash is a bourne shell clone from Berkeley. It supports all of the
+standard Bourne shell commands and has the advantage of supporting
+them while remaining considerably smaller than bash.
 
 %description static -l de
-ash ist ein Bourne-Shell-Clone aus Berkeley, der alle Standard-Bourne-Shell-
-Befehle unterstützt und dennoch erheblich weniger Platz beansprucht als bash. 
+ash ist ein Bourne-Shell-Clone aus Berkeley, der alle
+Standard-Bourne-Shell- Befehle unterstützt und dennoch erheblich
+weniger Platz beansprucht als bash.
 
 %description static -l fr
-ash est un clone Berkeley du shell Bourne. Il gère toutes les commandes
-standard du shell Bourne et a l'avantage de les gérer tout en restant
-considérablement plus petit que bash.
+ash est un clone Berkeley du shell Bourne. Il gère toutes les
+commandes standard du shell Bourne et a l'avantage de les gérer tout
+en restant considérablement plus petit que bash.
 
 %description static -l pl
-Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe komendy
-shell'a Bourne'a i jest mniejszy ni¿ bash. 
+Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe
+komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
 
 %description static -l tr
 ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
