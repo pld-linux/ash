@@ -33,14 +33,6 @@ diff -ruN ash-0.4.0.org/error.h ash-0.4.0/error.h
 diff -ruN ash-0.4.0.org/eval.c ash-0.4.0/eval.c
 --- ash-0.4.0.org/eval.c	Wed Sep 11 12:06:11 2002
 +++ ash-0.4.0/eval.c	Wed Sep 11 13:10:46 2002
-@@ -78,6 +78,7 @@
- #endif
- 
- 
-+#define __UCLIBC__
- /* flags in argument to evaltree */
- #define EV_EXIT 01		/* exit after evaluating tree */
- #define EV_TESTED 02		/* exit status is checked; ignore -e flag */
 @@ -1149,11 +1150,8 @@
  get_standard_path()
  {
