@@ -158,9 +158,9 @@ mv -f sh ash.BOOT
 %endif
 
 # other
-%{__make} OPT_FLAGS="%{rpmlclags}" LDFLAGS="-static %{rpmldflags}"
+%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"
 mv -f sh ash.static
-%{__make} OPT_FLAGS="%{rpmldflags}" LDFLAGS="%{rpmldflags}"
+%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
