@@ -5,7 +5,7 @@ Summary(pl): Ma³y shell bourne'a
 Summary(tr): Ufak bir bourne kabuðu
 Name:        ash
 Version:     0.2
-Release:     14
+Release:     15
 Copyright:   BSD
 Group:       Shells
 Source:      ftp://sunsite.unc.edu:/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
@@ -48,7 +48,7 @@ make
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,usr/man/man1}
 
-install -s sh $RPM_BUILD_ROOT/bin/ash
+install sh $RPM_BUILD_ROOT/bin/ash
 install sh.1 $RPM_BUILD_ROOT/usr/man/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT/usr/man/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/bin/bsh
@@ -56,24 +56,20 @@ ln -sf ash $RPM_BUILD_ROOT/bin/bsh
 rm -f sh
 make STATIC=-static
 
-install -s sh $RPM_BUILD_ROOT/bin/ash.static
+install sh $RPM_BUILD_ROOT/bin/ash.static
+
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man1/*
 
 %post
-if [ ! -f /etc/shells ]; then
-	echo "/bin/ash" > /etc/shells
-	echo "/bin/bsh" >> /etc/shells
-else
-	if ! grep '^/bin/ash$' /etc/shells > /dev/null; then
-		echo "/bin/ash" >> /etc/shells
-	fi
-	if ! grep '^/bin/bsh$' /etc/shells > /dev/null; then
-		echo "/bin/bsh" >> /etc/shells
-	fi
-fi
+umask 022
+echo "/bin/ash" >> /etc/shells
+echo "/bin/bsh" >> /etc/shells
+cat /etc/shells | sort -u > /etc/shells.new
+mv /etc/shells.new /etc/shells
 
 %postun
 if [ "$0" = 0 ]; then
-	grep -v '^/bin/ash' < /etc/shells | grep -v '^/bin/bsh' > /etc/shells.new
+	egrep -v "^/bin/ash|^/bin/bsh" /etc/shells > /etc/shells.new
 	mv /etc/shells.new /etc/shells
 fi
 
@@ -96,6 +92,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(644, root,  man) /usr/man/man1/*
 
 %changelog
+* Wed Dec 23 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [0.2-15]
+- simplification in %postun and %post,
+- added gzipping man pages.
+
 * Fri Nov 06 1998 Preston Brown <pbrown@redhat.com>
   [0.2-14]
 - updated to correct path on SunSITE.
