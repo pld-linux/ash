@@ -5,7 +5,7 @@ diff -u ash-0.4.0/eval.c ash-0.4.0-/eval.c
  #endif
  		mode = (cmdentry.u.index == EXECCMD)? 0 : REDIR_PUSH;
  		if (flags == EV_BACKCMD) {
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +			openmemout();
 +#else
  			memout.nleft = 0;
@@ -19,11 +19,11 @@ diff -u ash-0.4.0/eval.c ash-0.4.0-/eval.c
  		if (cmdentry.u.index != EXECCMD)
  			popredir();
  		if (flags == EV_BACKCMD) {
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +			closememout();
 +#endif
  			backcmd->buf = memout.buf;
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +			backcmd->nleft = memout.bufsize;
 +#else
  			backcmd->nleft = memout.nextc - memout.buf;
@@ -42,7 +42,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  #include <errno.h>
  #include <unistd.h>
  #include <stdlib.h>
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +#undef CEOF			/* get rid of the redefine warning */
 +#include <fcntl.h>
 +#endif
@@ -53,7 +53,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  #define OUTPUT_ERR 01		/* error occurred on output */
  
  
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +struct output output = {NULL, NULL, 0, NULL, 0, 1, 0};
 +struct output errout = {NULL, NULL, 0, NULL, 0, 2, 0};
 +struct output memout = {NULL, NULL, 0, NULL, 0, MEM_OUT, 0};
@@ -70,7 +70,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  INCLUDE "memalloc.h"
  
 +INIT {
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +	initstreams();
 +#endif
 +}
@@ -78,7 +78,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  RESET {
  	out1 = &output;
  	out2 = &errout;
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +	if (memout.stream != NULL)
 +		closememout();
 +#endif
@@ -109,7 +109,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  	const char *p;
  	struct output *file;
  	{
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +	fputs(p, file->stream);
 +#else
  	while (*p)
@@ -120,7 +120,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  }
  
  
-+#ifndef _GNU_SOURCE
++#if !defined(_GNU_SOURCE) || defined(__UCLIBC__)
  char out_junk[16];
  
  
@@ -136,7 +136,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  }
  
  
-+#ifndef _GNU_SOURCE
++#if !defined(_GNU_SOURCE) || defined(__UCLIBC__)
  void
  flushout(dest)
  	struct output *dest;
@@ -157,7 +157,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  	va_end(ap);
  }
  
-+#ifndef __GLIBC__
++#if !defined(__GLIBC__) && !defined(__UCLIBC__)
  void
  #ifdef __STDC__
  dprintf(const char *fmt, ...)
@@ -173,7 +173,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  #endif
  {
  	va_list ap;
-+#ifndef _GNU_SOURCE
++#if !defined(_GNU_SOURCE) || defined(__UCLIBC__)
  	struct output strout;
 +#endif
  #ifndef __STDC__
@@ -183,7 +183,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
  #else
  	va_start(ap, fmt);
  #endif
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +	vsnprintf(outbuf, length, fmt, ap);
 +#else
  	strout.nextc = outbuf;
@@ -196,7 +196,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
 +#endif
  }
  
-+#ifndef _GNU_SOURCE
++#if !defined(_GNU_SOURCE) || defined(__UCLIBC__)
  /*
   * Formatted output.  This routine handles a subset of the printf formats:
   * - Formats supported: d, u, o, p, X, s, and c.
@@ -234,7 +234,7 @@ diff -u ash-0.4.0/output.c ash-0.4.0-/output.c
 +#endif
 +
 +
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +void initstreams() {
 +	output.stream = stdout;
 +	errout.stream = stderr;
@@ -262,12 +262,12 @@ diff -u ash-0.4.0/output.h ash-0.4.0-/output.h
  #else
  #include <varargs.h>
  #endif
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +#include <stdio.h>
 +#endif
  
  struct output {
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +	FILE *stream;
 +#endif
  	char *nextc;
@@ -299,7 +299,7 @@ diff -u ash-0.4.0/output.h ash-0.4.0-/output.h
      __attribute__((__format__(__printf__,2,3)));
  void out1fmt __P((const char *, ...))
      __attribute__((__format__(__printf__,1,2)));
-+#ifndef __GLIBC__
++#if !defined(__GLIBC__) && !defined(__UCLIBC__)
  void dprintf __P((const char *, ...))
      __attribute__((__format__(__printf__,1,2)));
 +#endif
@@ -311,7 +311,7 @@ diff -u ash-0.4.0/output.h ash-0.4.0-/output.h
 -int xioctl __P((int, unsigned long, char *));
 +#endif
 +int xwrite __P((int, const char *, int));
-+#ifdef _GNU_SOURCE
++#if defined(_GNU_SOURCE) && !defined(__UCLIBC__)
 +void initstreams __P((void));
 +void openmemout __P((void));
 +void closememout __P((void));
