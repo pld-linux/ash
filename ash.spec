@@ -1,3 +1,5 @@
+# conditional build:
+# if BOOT is defined, build BOOT package too
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
@@ -15,7 +17,7 @@ Patch0:		%{name}-Makefile.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
-BuildRequires:	uClibc-devel-BOOT
+%{?BOOT:BuildRequires:	uClibc-devel-BOOT}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
@@ -82,6 +84,7 @@ ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
 komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
+%if %{?BOOT:1}%{!?BOOT:0}
 %package BOOT
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
@@ -98,19 +101,24 @@ standard Bourne shell commands and has the advantage of supporting
 them while remaining considerably smaller than bash.
 Version for bootdisk
 
+%endif
+
 %prep
 %setup -q -n ash-linux-%{version}
 %patch -p1
 
 %build
-# so far use static version linked with glibc
+# BOOT
+%if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
 	OPT_FLAGS="-I/usr/lib/bootdisk%{_includedir} -Os" \
 	LDFLAGS="-nostdlib -s" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
 mv -f sh ash.BOOT
 %{__make} clean
+%endif
 
+# other
 %{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="-static %{!?debug:-s}"
 mv -f sh ash.static
@@ -121,14 +129,18 @@ mv -f sh ash.static
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
-install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}
 
+# BOOT
+%if %{?BOOT:1}%{!?BOOT:0}
+install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/bin
+install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
+ln -s ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
+%endif
+
+# other
+install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
 install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
-#install sh-BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
-install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
-
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
@@ -191,6 +203,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ash.static
 
+%if %{?BOOT:1}%{!?BOOT:0}
 %files BOOT
 %defattr(644,root,root,755)
-%attr(755,root,root) /usr/lib/bootdisk/%{_bindir}/ash
+%attr(755,root,root) /usr/lib/bootdisk/bin/*
+%endif
