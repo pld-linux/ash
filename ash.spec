@@ -151,20 +151,16 @@ Version for bootdisk
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} \
 	OPT_FLAGS="-I/usr/lib/bootdisk%{_includedir} -Os" \
-	LDFLAGS="-nostdlib -s" \
+	LDFLAGS="-nostdlib %{rpmldflags}" \
 	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
 mv -f sh ash.BOOT
 %{__make} clean
 %endif
 
 # other
-%{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
-	LDFLAGS="-static %{!?debug:-s}"
+%{__make} OPT_FLAGS="%{rpmlclags}" LDFLAGS="-static %{rpmldflags}"
 mv -f sh ash.static
-%{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
-	LDFLAGS="%{!?debug:-s}"
-
-
+%{__make} OPT_FLAGS="%{rpmldflags}" LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -172,7 +168,7 @@ rm -rf $RPM_BUILD_ROOT
 # BOOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/bin
-install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
+install ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
 ln -s ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
 %endif
 
