@@ -7,11 +7,15 @@
 
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
+Summary(es):	Pequeña shell bourne de Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a
+Summary(pt_BR):	Pequena shell bourne de Berkeley
 Summary(ru):	ïÂÌÅÇŞÅÎÎÁÑ ×ÅÒÓÉÑ Bourne shell (sh)
 Summary(tr):	Ufak bir bourne kabuğu
 Summary(uk):	ğÏÌÅÇÛÅÎÁ ×ÅÒÓ¦Ñ Bourne shell (sh)
+Summary(zh_CN):	[ÏµÍ³]BerkeleyµÄÎ¢ĞÍBourne Shell
+Summary(zh_TW):	[-A¨t$)B²Î]Berkeleyªº-A·L$)B«¬Bourne Shell
 Name:		ash
 Version:	0.4.0
 Release:	8
@@ -61,6 +65,11 @@ ash ist ein Bourne-Shell-Clone aus Berkeley, der alle
 Standard-Bourne-Shell- Befehle unterstützt und dennoch erheblich
 weniger Platz beansprucht als bash.
 
+%description -l es
+ash es un clone del shell bourne de Berkeley. Soporta todos los
+comandos padrón de la Bourne shell y tiene la ventaja de soportarlos
+con un tamaño considerablemente menor del que bash.
+
 %description -l fr
 ash est un clone Berkeley du shell Bourne. Il gère toutes les
 commandes standard du shell Bourne et a l'avantage de les gérer tout
@@ -69,6 +78,11 @@ en restant considérablement plus petit que bash.
 %description -l pl
 Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
 komendy shella Bourne'a i jest mniejszy ni¿ bash.
+
+%description -l pt_BR
+ash é um clone do shell bourne de Berkeley. Ele suporta todos os
+comandos-padrão da Bourne shell e tem a vantagem de suportá-los com um
+tamanho consideravelmente menor do que bash.
 
 %description -l ru
 ûÅÌÌ - ÜÔÏ ÂÁÚÏ×ÁÑ ÓÉÓÔÅÍÎÁÑ ĞÒÏÇÒÁÍÍÁ, ËÏÔÏÒÁÑ ÉÎÔÅÒĞÒÅÔÉÒÕÅÔ ËÏÍÁÎÄÙ
