@@ -80,22 +80,50 @@ ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
 komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
+%package BOOT
+Summary:	Small bourne shell from Berkeley
+Summary(de):	Kleine Bourne-Shell von Berkeley
+Summary(fr):	Shell Bourne réduit de Berkeley
+Summary(pl):	Ma³y shell bourne'a 
+Summary(tr):	Ufak bir bourne kabuðu
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow³oki
+
+%description BOOT
+ash is a bourne shell clone from Berkeley. It supports all of the
+standard Bourne shell commands and has the advantage of supporting
+them while remaining considerably smaller than bash.
+Version for bootdisk
+
 %prep
 %setup -q -n ash-linux-%{version}
 
 %build
+# build with dietlibc - does not work
+# so far use static version linked with glibc
+#%{__make} CFLAGS="-I/usr/lib/bootdisk%{_includedir}" OPT_FLAGS="-Os"
+#%{__make} sh-BOOT LDFLAGS=""
+#%{__make} clean
+
 %{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="-static %{!?debug:-s}"
 mv -f sh ash.static
 %{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="%{!?debug:-s}"
 
+
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}
 
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
 install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
+#install sh-BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
+install -s ash.static $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
+
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
@@ -157,3 +185,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ash.static
+
+%files BOOT
+%defattr(644,root,root,755)
+%attr(755,root,root) /usr/lib/bootdisk/%{_bindir}/ash
