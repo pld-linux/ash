@@ -40,6 +40,41 @@ ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
 komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
+%package static
+Summary:     	Small bourne shell from Berkeley
+Summary(de): 	Kleine Bourne-Shell von Berkeley
+Summary(fr): 	Shell Bourne réduit de Berkeley
+Summary(pl):	Ma³y shell bourne'a 
+Summary(tr):	Ufak bir bourne kabuðu
+Group:       	Shells
+Group(pl):	Pow³oki
+Prereq:      	fileutils
+Prereq:		grep
+Conflicts:   	mkinitrd <= 1.7
+
+%description static
+ash is a bourne shell clone from Berkeley.  It supports all of the standard
+Bourne shell commands and has the advantage of supporting them while 
+remaining considerably smaller than bash. 
+
+%description static -l de
+ash ist ein Bourne-Shell-Clone aus Berkeley, der alle Standard-Bourne-Shell-
+Befehle unterstützt und dennoch erheblich weniger Platz beansprucht als bash. 
+
+%description static -l fr
+ash est un clone Berkeley du shell Bourne. Il gère toutes les commandes
+standard du shell Bourne et a l'avantage de les gérer tout en restant
+considérablement plus petit que bash.
+
+%description static -l pl
+Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe komendy
+shell'a Bourne'a i jest mniejszy ni¿ bash. 
+
+%description static -l tr
+ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
+komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
+avantajýna sahiptir.
+
 %prep
 %setup  -q -n ash-linux-%{version}
 %patch0 -p1
@@ -68,7 +103,6 @@ gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 if [ ! -f /etc/shells ]; then
         echo "/bin/ash" > /etc/shells
         echo "/bin/bsh" >> /etc/shells
-        echo "/bin/ash.static" >> /etc/shells
 else
         if ! grep '^/bin/ash$' /etc/shells > /dev/null; then
                 echo "/bin/ash" >> /etc/shells
@@ -76,16 +110,30 @@ else
         if ! grep '^/bin/bsh$' /etc/shells > /dev/null; then
                 echo "/bin/bsh" >> /etc/shells
         fi
+fi
+
+%post static
+if [ ! -f /etc/shells ]; then
+        echo "/bin/ash.static" >> /etc/shells
+else
         if ! grep '^/bin/ash.static$' /etc/shells > /dev/null; then
                 echo "/bin/ash.static" >> /etc/shells
         fi
 fi
 
-%postun
+
+%preun
 if [ "$0" = 0 ]; then
         grep -v /bin/ash /etc/shells | grep -v /bin/bsh | grep -v /bin/ash.static > /etc/shells.new
         mv /etc/shells.new /etc/shells
 fi
+
+%preun static
+if [ "$0" = 0 ]; then
+        grep -v /bin/ash /etc/shells | grep -v /bin/bsh > /etc/shells.new
+        mv /etc/shells.new /etc/shells
+fi
+
 
 %verifyscript
 for n in ash bsh ash.static; do
@@ -103,5 +151,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) /bin/*
+%attr(755,root,root) /bin/ash
+/bin/bsh
 %{_mandir}/man1/*
+
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/ash.static
