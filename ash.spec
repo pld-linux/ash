@@ -1,10 +1,13 @@
 #
 # Conditional build
-# --without static	- don't build static
-# --with dietlibc	- link with dietlibc, implies --without static)
+%bcond_without	static		# don't build static
+%bcond_with	dietlibc	# link with dietlibc, implies --without static)
+%bcond_with	uClibc		# link with uclibc
 # Branch: HEAD
 
-%{?_with_dietlibc:%define _without_static 1}
+%if %{with dietlibc}
+%undefine 	with_static
+%endif
 
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
@@ -47,9 +50,13 @@ Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
 Patch21:	%{name}-dietlibc.patch
 BuildRequires:	byacc
-%{?_with_dietlibc:BuildRequires:	dietlibc-static}
+%{?with_dietlibc:BuildRequires:	dietlibc-devel}
 BuildRequires:	flex
-%{!?_without_static:BuildRequires:	glibc-static}
+%if %{with static}
+%{?without_uClibc:BuildRequires: glibc-static}
+%{?with_uClibc:BuildRequires: uClibc-static > 2:0.9.27-1}
+%endif
+%{?with_uClibc:BuildRequires: uClibc-devel > 2:0.9.27-1}
 Requires(post,preun,verify):	grep
 Requires(preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -170,10 +177,12 @@ avantajýna sahiptir.
 
 %build
 
-%{?_with_dietlibc:%define __cc %{_arch}-dietlibc-gcc}
+%define __cc %{_target_cpu}-pld-linux-gcc
+%{?with_dietlibc:%define __cc %{_target_cpu}-dietlibc-gcc}
+%{?with_uClibc:%define __cc %{_target_cpu}-uclibc-gcc}
 
-%{!?_without_static:%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"}
-%{!?_without_static:mv -f sh ash.static}
+%{?with_static:%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}" CC="%{__cc}"}
+%{?with_static:mv -f sh ash.static}
 %{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" CC="%{__cc}"
 
 %install
@@ -181,7 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
-%{!?_without_static:install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static}
+%{?with_static:install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static}
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT%{_bindir}/bsh
@@ -253,6 +262,8 @@ fi
 %attr(755,root,root) %{_bindir}/bsh
 %{_mandir}/man1/*
 
-%{!?_without_static:%files static}
-%{!?_without_static:%defattr(644,root,root,755)}
-%{!?_without_static:%attr(755,root,root) %{_bindir}/ash.static}
+%if %{with static}
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ash.static
+%endif
