@@ -1,6 +1,4 @@
 # Branch: HEAD
-# conditional build:
-# _without_embed - don't build uClibc version
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
@@ -8,7 +6,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	5
+Release:	6
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
@@ -38,16 +36,8 @@ PreReq:		grep
 BuildRequires:	glibc-static
 BuildRequires:	flex
 BuildRequires:	byacc
-%if %{!?_without_embed:1}%{?_without_embed:0}
-BuildRequires:	uClibc-devel
-BuildRequires:	uClibc-static
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
-
-%define embed_path	/usr/lib/embed
-%define embed_cc	%{_arch}-uclibc-cc
-%define embed_cflags	%{rpmcflags} -Os
 
 %define		_bindir		/bin
 
@@ -110,25 +100,6 @@ ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
 komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
-%package embed
-Summary:	Small bourne shell from Berkeley
-Summary(de):	Kleine Bourne-Shell von Berkeley
-Summary(fr):	Shell Bourne réduit de Berkeley
-Summary(pl):	Ma³y shell bourne'a
-Summary(tr):	Ufak bir bourne kabuðu
-Group:		Applications/Shells
-
-%description embed
-ash is a bourne shell clone from Berkeley. It supports all of the
-standard Bourne shell commands and has the advantage of supporting
-them while remaining considerably smaller than bash. Version for
-embedded systems.
-
-%description embed -l pl
-Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
-komendy shella Bourne'a i jest mniejszy ni¿ bash. Wersja dla systemów
-osadzonych.
-
 %prep
 %setup -q
 %patch0 -p1
@@ -155,24 +126,7 @@ osadzonych.
 %patch20 -p1
 
 %build
-# BOOT
-%if %{!?_without_embed:1}%{?_without_embed:0}
-# some of this utilities does not compile with uClibc
-# and it is not necessary
-%{__make} mksignames mkbuiltins mknodes mksignames mksyntax mktokens
-%{__make} \
-	OPT_FLAGS="%{embed_cflags}" \
-	CC=%{embed_cc}
-mv -f sh ash-embed-shared
-%{__make} \
-	OPT_FLAGS="%{embed_cflags}" \
-	LDFLAGS="-static" \
-	CC=%{embed_cc}
-mv -f sh ash-embed-static
-%{__make} clean
-%endif
 
-# other
 %{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"
 mv -f sh ash.static
 %{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
@@ -180,16 +134,6 @@ mv -f sh ash.static
 %install
 rm -rf $RPM_BUILD_ROOT
 
-# BOOT
-%if %{!?_without_embed:1}%{?_without_embed:0}
-install -d $RPM_BUILD_ROOT/%{embed_path}/{shared,static}
-install ash-embed-static $RPM_BUILD_ROOT/%{embed_path}/static/ash
-install ash-embed-shared $RPM_BUILD_ROOT/%{embed_path}/shared/ash
-ln -sf ash $RPM_BUILD_ROOT/%{embed_path}/shared/sh
-ln -sf ash $RPM_BUILD_ROOT/%{embed_path}/static/sh
-%endif
-
-# other
 install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
 install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
@@ -263,9 +207,3 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ash.static
-
-%if %{!?_without_embed:1}%{?_without_embed:0}
-%files embed
-%defattr(644,root,root,755)
-%attr(755,root,root) %{embed_path}/*/*
-%endif
