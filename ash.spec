@@ -5,7 +5,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:        	ash
 Version:     	0.2
-Release:     	17
+Release:     	18
 Copyright:   	BSD
 Group:       	Shells
 Group(pl):	Pow³oki
@@ -50,7 +50,7 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,usr/man/man1}
+install -d $RPM_BUILD_ROOT/{bin,%{_mandir}/man1}
 
 install sh $RPM_BUILD_ROOT/bin/ash
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
@@ -65,19 +65,30 @@ install sh $RPM_BUILD_ROOT/bin/ash.static
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %post
-umask 022
-echo "/bin/ash\n/bin/bsh" >> /etc/shells
-cat /etc/shells | sort -u > /etc/shells.new
-mv /etc/shells.new /etc/shells
+if [ ! -f /etc/shells ]; then
+        echo "/bin/ash" > /etc/shells
+        echo "/bin/bsh" >> /etc/shells
+        echo "/bin/ash.static" >> /etc/shells
+else
+        if ! grep '^/bin/ash$' /etc/shells > /dev/null; then
+                echo "/bin/ash" >> /etc/shells
+        fi
+        if ! grep '^/bin/bsh$' /etc/shells > /dev/null; then
+                echo "/bin/bsh" >> /etc/shells
+        fi
+        if ! grep '^/bin/ash.static$' /etc/shells > /dev/null; then
+                echo "/bin/ash.static" >> /etc/shells
+        fi
+fi
 
 %postun
 if [ "$0" = 0 ]; then
-	egrep -v "^/bin/ash|^/bin/bsh" /etc/shells > /etc/shells.new
-	mv /etc/shells.new /etc/shells
+        grep -v /bin/ash /etc/shells | grep -v /bin/bsh | grep -v /bin/ash.static > /etc/shells.new
+        mv /etc/shells.new /etc/shells
 fi
 
 %verifyscript
-for n in ash bsh; do
+for n in ash bsh ash.static; do
     echo -n "Looking for $n in /etc/shells... "
     if ! grep "^/bin/${n}\$" /etc/shells > /dev/null; then
 	echo "missing"
@@ -96,6 +107,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Mon Jun 07 1999 Jan Rêkorajski <baggins@pld.org.pl>
+  [0.2-18]
+- spec cleanup
+
 * Wed Apr 21 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [0.2-17]
 - added Group(pl),
