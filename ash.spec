@@ -7,35 +7,37 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Source:      	ash-%{version}.tar.gz
-Patch0:		ash-builtin.patch
-Patch1:		ash-echo.patch
-Patch2:		ash-getcwd.patch
-Patch3:		ash-getopt.patch
-Patch4:		ash-glob.patch
-Patch5:		ash-jobs.patch
-Patch6:		ash-kill.patch
-Patch7:		ash-makefile.patch
-Patch8:		ash-manpage.patch
-Patch9:		ash-hetio.patch
-Patch10:	ash-memout.patch
-Patch11:	ash-misc.patch
-Patch12:	ash-redir.patch
-Patch13:	ash-setmode.patch
-Patch14:	ash-syntax.patch
-Patch15:	ash-test.patch
-Patch16:	ash-times.patch
-Patch17:	ash-debian.patch
-Patch18:	ash-ppid.patch
-Patch19:	ash-freebsd.patch
+Source:      	%{name}-%{version}.tar.gz
+Patch0:		%{name}-builtin.patch
+Patch1:		%{name}-echo.patch
+Patch2:		%{name}-getcwd.patch
+Patch3:		%{name}-getopt.patch
+Patch4:		%{name}-glob.patch
+Patch5:		%{name}-jobs.patch
+Patch6:		%{name}-kill.patch
+Patch7:		%{name}-makefile.patch
+Patch8:		%{name}-manpage.patch
+Patch9:		%{name}-hetio.patch
+Patch10:	%{name}-memout.patch
+Patch11:	%{name}-misc.patch
+Patch12:	%{name}-redir.patch
+Patch13:	%{name}-setmode.patch
+Patch14:	%{name}-syntax.patch
+Patch15:	%{name}-test.patch
+Patch16:	%{name}-times.patch
+Patch17:	%{name}-debian.patch
+Patch18:	%{name}-ppid.patch
+Patch19:	%{name}-freebsd.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
+BuildRequires:	flex
+BuildRequires:	byacc
 %{?BOOT:BuildRequires:	uClibc-devel-BOOT}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
@@ -123,7 +125,7 @@ Version for bootdisk
 %endif
 
 %prep
-%setup -q -n ash-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -169,7 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/bin
 install ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
-ln -s ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
+ln -sf ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
 %endif
 
 # other
@@ -185,10 +187,10 @@ if [ ! -f /etc/shells ]; then
         echo "%{_bindir}/ash" > /etc/shells
         echo "%{_bindir}/bsh" >> /etc/shells
 else
-        if ! grep '^%{_bindir}/ash$' /etc/shells > /dev/null; then
+        if ! grep -q '^%{_bindir}/ash$' /etc/shells ; then
                 echo "%{_bindir}/ash" >> /etc/shells
         fi
-        if ! grep '^%{_bindir}/bsh$' /etc/shells > /dev/null; then
+        if ! grep -q '^%{_bindir}/bsh$' /etc/shells ; then
                 echo "%{_bindir}/bsh" >> /etc/shells
         fi
 fi
@@ -197,33 +199,42 @@ fi
 if [ ! -f /etc/shells ]; then
         echo "%{_bindir}/ash.static" >> /etc/shells
 else
-        if ! grep '^%{_bindir}/ash.static$' /etc/shells > /dev/null; then
+        if ! grep -q '^%{_bindir}/ash.static$' /etc/shells ; then
                 echo "%{_bindir}/ash.static" >> /etc/shells
         fi
 fi
 
 %preun
 if [ "$0" = 0 ]; then
-        grep -v %{_bindir}/ash /etc/shells | grep -v %{_bindir}/bsh | grep -v %{_bindir}/ash.static > /etc/shells.new
+        grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
         mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
 if [ "$0" = 0 ]; then
-        grep -v %{_bindir}/ash /etc/shells | grep -v %{_bindir}/bsh > /etc/shells.new
+        grep -v '^%{_bindir}/ash\.static$' /etc/shells > /etc/shells.new
         mv -f /etc/shells.new /etc/shells
 fi
 
 %verifyscript
-for n in ash bsh ash.static; do
+for n in ash bsh ; do
     echo -n "Looking for $n in /etc/shells... "
-    if ! grep "^%{_bindir}/${n}\$" /etc/shells > /dev/null; then
+    if ! grep -q "^%{_bindir}/${n}\$" /etc/shells ; then
 	echo "missing"
 	echo "${n} missing from /etc/shells" >&2
     else
 	echo "found"
     fi
 done
+
+%verifyscript static
+echo -n "Looking for ash.static in /etc/shells... "
+if ! grep -q '^%{_bindir}/ash\.static$' /etc/shells ; then
+	echo "missing"
+	echo "ash.static missing from /etc/shells" >&2
+else
+	echo "found"
+fi
 
 %clean
 rm -rf $RPM_BUILD_ROOT
