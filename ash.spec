@@ -205,13 +205,13 @@ else
 fi
 
 %preun
-if [ "$0" = 0 ]; then
+if [ "$1" = 0 ]; then
         grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
         mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
-if [ "$0" = 0 ]; then
+if [ "$1" = 0 ]; then
         grep -v '^%{_bindir}/ash\.static$' /etc/shells > /etc/shells.new
         mv -f /etc/shells.new /etc/shells
 fi
