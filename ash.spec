@@ -69,8 +69,8 @@ commandes standard du shell Bourne et a l'avantage de les gérer tout
 en restant considérablement plus petit que bash.
 
 %description -l pl
-Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
-komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
+Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
+komendy shella Bourne'a i jest mniejszy ni¿ bash.
 
 %description -l tr
 ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
@@ -106,8 +106,8 @@ commandes standard du shell Bourne et a l'avantage de les gérer tout
 en restant considérablement plus petit que bash.
 
 %description static -l pl
-Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
-komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
+Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
+komendy shella Bourne'a i jest mniejszy ni¿ bash.
 
 %description static -l tr
 ash, Berkeley'in bir bourne kabuðu kopyasýdýr. Standart bourne kabuðu
@@ -131,8 +131,8 @@ them while remaining considerably smaller than bash.
 Version for embedded systems.
 
 %description embed -l pl
-Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
-komendy shell'a Bourne'a i jest mniejszy ni¿ bash. Wersja dla systemów
+Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
+komendy shella Bourne'a i jest mniejszy ni¿ bash. Wersja dla systemów
 osadzonych.
 
 %prep
