@@ -5,7 +5,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.2
-Release:	18
+Release:	20
 License:	BSD
 Group:		Shells
 Group(pl):	Pow³oki
