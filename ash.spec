@@ -5,13 +5,19 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.2
-Release:	21
+Release:	24
 License:	BSD
 Group:		Shells
 Group(pl):	Pow³oki
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/shells/%{name}-linux-%{version}.tar.gz
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-mknodes.patch
+Patch2:		ash-fd.patch
+Patch3:		ash-exit.patch
+Patch4:		ash-echo.patch
+Patch5:		ash-mksyntax.patch
+Patch6:		ash-linux-sighup.patch
+Patch7:		ash-linux-mkinit.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
@@ -84,6 +90,12 @@ avantajýna sahiptir.
 %setup -q -n ash-linux-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %{__make} OPT_FLAGS="$RPM_OPT_FLAGS" STATIC=-static
