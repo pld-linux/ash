@@ -84,10 +84,10 @@ avantajýna sahiptir.
 %setup -q -n ash-linux-%{version}
 
 %build
-%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
+%{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="-static %{!?debug:-s}"
 mv -f sh ash.static
-%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
+%{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="%{!?debug:-s}"
 
 %install
