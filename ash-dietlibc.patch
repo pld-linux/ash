@@ -1,0 +1,105 @@
+diff -ruN ash-0.4.0.org/Makefile ash-0.4.0/Makefile
+--- ash-0.4.0.org/Makefile	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/Makefile	Wed Sep 11 13:10:46 2002
+@@ -50,9 +50,14 @@
+ init.c: mkinit $(INIT_DEPS)
+ 	./mkinit $(INIT_DEPS)
+ 
+-mkinit: mkinit.o
+-mknodes: mknodes.o
+-mksyntax: mksyntax.o
++mkinit: mkinit.c
++	cc -o mkinit mkinit.c
++mknodes: mknodes.c
++	cc -o mknodes mknodes.c
++mksyntax: mksyntax.c
++	cc -o mksyntax mksyntax.c
++mksignames: mksignames.c
++	cc -o mksignames mksignames.c
+ 
+ signames.c: mksignames
+ 	./mksignames
+diff -ruN ash-0.4.0.org/error.h ash-0.4.0/error.h
+--- ash-0.4.0.org/error.h	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/error.h	Wed Sep 11 13:10:46 2002
+@@ -102,7 +102,3 @@
+  * so we use _setjmp instead.
+  */
+ 
+-#if defined(BSD) && !defined(__SVR4) && !defined(__GLIBC__)
+-#define setjmp(jmploc)	_setjmp(jmploc)
+-#define longjmp(jmploc, val)	_longjmp(jmploc, val)
+-#endif
+diff -ruN ash-0.4.0.org/eval.c ash-0.4.0/eval.c
+--- ash-0.4.0.org/eval.c	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/eval.c	Wed Sep 11 13:10:46 2002
+@@ -78,6 +78,7 @@
+ #endif
+ 
+ 
++#define __UCLIBC__
+ /* flags in argument to evaltree */
+ #define EV_EXIT 01		/* exit after evaluating tree */
+ #define EV_TESTED 02		/* exit status is checked; ignore -e flag */
+@@ -1149,11 +1150,8 @@
+ get_standard_path()
+ {
+ 	char *p;
+-	size_t len;
+ 
+-	len = confstr(_CS_PATH, NULL, 0);
+-	p = stalloc(len + 2);
+-	*p = '\0';
+-	confstr(_CS_PATH, p, len);
++	p = stalloc(15);
++	*p = "/bin:/usr/bin";
+ 	return p;
+ }
+diff -ruN ash-0.4.0.org/mksignames.c ash-0.4.0/mksignames.c
+--- ash-0.4.0.org/mksignames.c	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/mksignames.c	Wed Sep 11 13:11:00 2002
+@@ -353,7 +353,7 @@
+   fprintf (stream, "#include <signal.h>\n\n");
+   fprintf (stream,
+ 	   "/* A translation list so we can be polite to our users. */\n");
+-  fprintf (stream, "char *signal_names[NSIG + 2] = {\n");
++  fprintf (stream, "char *signal_names[66] = {\n");
+ 
+   for (i = 0; i <= NSIG; i++)
+     fprintf (stream, "    \"%s\",\n", signal_names[i]);
+diff -ruN ash-0.4.0.org/output.c ash-0.4.0/output.c
+--- ash-0.4.0.org/output.c	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/output.c	Wed Sep 11 13:10:46 2002
+@@ -620,7 +620,7 @@
+ 
+ void
+ openmemout() {
+-	memout.stream = open_memstream(&memout.buf, &memout.bufsize);
++//	memout.stream = open_memstream(&memout.buf, &memout.bufsize);
+ }
+ 
+ 
+diff -ruN ash-0.4.0.org/setmode.c ash-0.4.0/setmode.c
+--- ash-0.4.0.org/setmode.c	Wed Sep 11 12:06:11 2002
++++ ash-0.4.0/setmode.c	Wed Sep 11 13:10:46 2002
+@@ -45,7 +45,9 @@
+ #endif
+ #endif /* LIBC_SCCS and not lint */
+ 
++#define _BSD_SOURCE
+ #include <sys/types.h>
++#undef _BSD_SOURCE
+ #include <sys/stat.h>
+ 
+ #include <assert.h>
+@@ -64,9 +66,7 @@
+ __weak_alias(setmode,_setmode)
+ #endif
+ 
+-#ifdef __GLIBC__
+-#define S_ISTXT __S_ISVTX
+-#endif
++#define S_ISTXT 01000
+ 
+ #define	SET_LEN	6		/* initial # of bitcmd struct to malloc */
+ #define	SET_LEN_INCR 4		/* # of bitcmd structs to add as needed */
