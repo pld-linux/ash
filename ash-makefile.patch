@@ -30,7 +30,7 @@ diff -u ash-0.4.0/Makefile ash-0.4.0-/Makefile
 +all: $(PROG)
 +
 +$(PROG): build-tools $(GENSRCS) $(GENHDRS) $(OBJS)
-+	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS) -lfl
++	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS) $(LDLIBS) -lfl
 +	
 +lex.yy.c: arith_lex.l
 +	flex -8 $< 
