@@ -95,7 +95,7 @@ echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/bin/bsh
 
 rm -f sh
-make STATIC=-static
+%{__make} STATIC=-static
 
 install sh $RPM_BUILD_ROOT/bin/ash.static
 
