@@ -43,7 +43,6 @@ avantajýna sahiptir.
 
 %build
 make
-strip sh
 
 %install
 rm -rf $RPM_BUILD_ROOT
