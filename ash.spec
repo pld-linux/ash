@@ -22,6 +22,7 @@ Release:	8
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
+# Source0-md5:	1c59f5b62a081cb0cb3b053c01d79529
 Patch0:		%{name}-builtin.patch
 Patch1:		%{name}-echo.patch
 Patch2:		%{name}-getcwd.patch
