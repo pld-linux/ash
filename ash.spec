@@ -5,18 +5,20 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.2
-Release:	20
+Release:	21
 License:	BSD
 Group:		Shells
 Group(pl):	Pow³oki
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/shells/%{name}-linux-%{version}.tar.gz
-Patch0:		ash-make.patch
-Patch1:		ash-mknodes.patch
+Patch0:		%{name}-make.patch
+Patch1:		%{name}-mknodes.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
+
+%define		_prefix		/
 
 %description
 ash is a bourne shell clone from Berkeley. It supports all of the
@@ -79,67 +81,65 @@ komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
 %prep
-%setup  -q -n ash-linux-%{version}
+%setup -q -n ash-linux-%{version}
 %patch0 -p1
 %patch1 -p1
 
 %build
-%{__make}
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS" STATIC=-static
+mv -f sh ash.static
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/{bin,%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
 
-install sh $RPM_BUILD_ROOT/bin/ash
+install sh $RPM_BUILD_ROOT%{_bindir}/ash
+install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
-ln -sf ash $RPM_BUILD_ROOT/bin/bsh
-
-rm -f sh
-%{__make} STATIC=-static
-
-install sh $RPM_BUILD_ROOT/bin/ash.static
+ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
 
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %post
 if [ ! -f /etc/shells ]; then
-        echo "/bin/ash" > /etc/shells
-        echo "/bin/bsh" >> /etc/shells
+        echo "%{_bindir}/ash" > /etc/shells
+        echo "%{_bindir}/bsh" >> /etc/shells
 else
-        if ! grep '^/bin/ash$' /etc/shells > /dev/null; then
-                echo "/bin/ash" >> /etc/shells
+        if ! grep '^%{_bindir}/ash$' /etc/shells > /dev/null; then
+                echo "%{_bindir}/ash" >> /etc/shells
         fi
-        if ! grep '^/bin/bsh$' /etc/shells > /dev/null; then
-                echo "/bin/bsh" >> /etc/shells
+        if ! grep '^%{_bindir}/bsh$' /etc/shells > /dev/null; then
+                echo "%{_bindir}/bsh" >> /etc/shells
         fi
 fi
 
 %post static
 if [ ! -f /etc/shells ]; then
-        echo "/bin/ash.static" >> /etc/shells
+        echo "%{_bindir}/ash.static" >> /etc/shells
 else
-        if ! grep '^/bin/ash.static$' /etc/shells > /dev/null; then
-                echo "/bin/ash.static" >> /etc/shells
+        if ! grep '^%{_bindir}/ash.static$' /etc/shells > /dev/null; then
+                echo "%{_bindir}/ash.static" >> /etc/shells
         fi
 fi
 
 %preun
 if [ "$0" = 0 ]; then
-        grep -v /bin/ash /etc/shells | grep -v /bin/bsh | grep -v /bin/ash.static > /etc/shells.new
-        mv /etc/shells.new /etc/shells
+        grep -v %{_bindir}/ash /etc/shells | grep -v %{_bindir}/bsh | grep -v %{_bindir}/ash.static > /etc/shells.new
+        mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
 if [ "$0" = 0 ]; then
-        grep -v /bin/ash /etc/shells | grep -v /bin/bsh > /etc/shells.new
-        mv /etc/shells.new /etc/shells
+        grep -v %{_bindir}/ash /etc/shells | grep -v %{_bindir}/bsh > /etc/shells.new
+        mv -f /etc/shells.new /etc/shells
 fi
 
 %verifyscript
 for n in ash bsh ash.static; do
     echo -n "Looking for $n in /etc/shells... "
-    if ! grep "^/bin/${n}\$" /etc/shells > /dev/null; then
+    if ! grep "^%{_bindir}/${n}\$" /etc/shells > /dev/null; then
 	echo "missing"
 	echo "${n} missing from /etc/shells" >&2
     else
@@ -152,10 +152,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) /bin/ash
-/bin/bsh
+%attr(755,root,root) %{_bindir}/ash
+%attr(755,root,root) %{_bindir}/bsh
 %{_mandir}/man1/*
 
 %files static
 %defattr(644,root,root,755)
-%attr(755,root,root) /bin/ash.static
+%attr(755,root,root) %{_bindir}/ash.static
