@@ -1,18 +1,20 @@
-Summary:     Small bourne shell from Berkeley
-Summary(de): Kleine Bourne-Shell von Berkeley
-Summary(fr): Shell Bourne réduit de Berkeley
-Summary(pl): Ma³y shell bourne'a 
-Summary(tr): Ufak bir bourne kabuðu
-Name:        ash
-Version:     0.2
-Release:     15
-Copyright:   BSD
-Group:       Shells
-Source:      ftp://sunsite.unc.edu:/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
-Patch:       ash-make.patch
-Prereq:      fileutils, grep
-Buildroot:   /tmp/%{name}-%{version}-root
-Conflicts:   mkinitrd <= 1.7
+Summary:     	Small bourne shell from Berkeley
+Summary(de): 	Kleine Bourne-Shell von Berkeley
+Summary(fr): 	Shell Bourne réduit de Berkeley
+Summary(pl):	Ma³y shell bourne'a 
+Summary(tr):	Ufak bir bourne kabuðu
+Name:        	ash
+Version:     	0.2
+Release:     	15
+Copyright:   	BSD
+Group:       	Shells
+Source:      	ftp://sunsite.unc.edu:/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
+Patch0:       	ash-make.patch
+Patch1:		ash-mknodes.patch
+Prereq:      	fileutils
+Prereq:		grep
+Buildroot:   	/tmp/%{name}-%{version}-root
+Conflicts:   	mkinitrd <= 1.7
 
 %description
 ash is a bourne shell clone from Berkeley.  It supports all of the standard
@@ -38,8 +40,9 @@ komutlarýnýn tümünü destekler ve bash kabuðundan daha küçük olma
 avantajýna sahiptir.
 
 %prep
-%setup -q -n ash-linux-%{version}
-%patch -p1
+%setup  -q -n ash-linux-%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
 make
