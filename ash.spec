@@ -7,7 +7,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	2
+Release:	3
 License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -33,6 +33,7 @@ Patch16:	%{name}-times.patch
 Patch17:	%{name}-debian.patch
 Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
+Patch20:	%{name}-sighup.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
@@ -149,6 +150,7 @@ Version for bootdisk
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 # BOOT
@@ -178,7 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 # BOOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/bin
-install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
+install ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
 ln -sf ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
 %endif
 
