@@ -9,7 +9,7 @@ Release:     13
 Copyright:   BSD
 Group:       Shells
 Source:      ftp://sunsite.unc.edu:/pub/Linux/system/Shells/ash-linux-%{version}.tar.gz
-Patch:       ash.patch
+Patch:       ash-make.patch
 Prereq:      fileutils, grep
 Buildroot:   /tmp/%{name}-%{version}-root
 Conflicts:   mkinitrd <= 1.7
