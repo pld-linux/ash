@@ -1,7 +1,7 @@
 #
 # Conditional build
 %bcond_without	static		# don't build static
-%bcond_with	dietlibc	# link with dietlibc, implies --without static)
+%bcond_with	dietlibc	# link with dietlibc, implies without static
 %bcond_with	uClibc		# link with uclibc
 # Branch: HEAD
 
