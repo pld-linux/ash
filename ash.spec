@@ -5,7 +5,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.2
-Release:	24
+Release:	25
 License:	BSD
 Group:		Shells
 Group(pl):	Pow³oki
@@ -24,7 +24,7 @@ BuildRequires:	glibc-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
-%define		_prefix		/
+%define		_bindir		/bin
 
 %description
 ash is a bourne shell clone from Berkeley. It supports all of the
