@@ -43,6 +43,7 @@ Patch20:	%{name}-sighup.patch
 PreReq:		fileutils
 PreReq:		grep
 %{!?_without_static:BuildRequires:	glibc-static}
+%{?_with_dietlibc:BuildRequires:	dietlibc-static}
 BuildRequires:	flex
 BuildRequires:	byacc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
