@@ -4,21 +4,13 @@ Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a 
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
-Version:	0.2
-Release:	27
+Version:	0.3
+Release:	1
 License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Source0:	ftp://sunsite.unc.edu/pub/Linux/system/shells/%{name}-linux-%{version}.tar.gz
-Patch0:		%{name}-make.patch
-Patch1:		%{name}-mknodes.patch
-Patch2:		%{name}-fd.patch
-Patch3:		%{name}-exit.patch
-Patch4:		%{name}-echo.patch
-Patch5:		%{name}-mksyntax.patch
-Patch6:		%{name}-linux-sighup.patch
-Patch7:		%{name}-linux-mkinit.patch
+Source0:	ftp://ftp.pld.org.pl/people/malekith/%{name}-linux-%{version}.tar.gz
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
@@ -90,19 +82,13 @@ avantajýna sahiptir.
 
 %prep
 %setup -q -n ash-linux-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 %build
-%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" STATIC=-static
+%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
+	LDFLAGS="-static %{!?debug:-s}"
 mv -f sh ash.static
-%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}"
+%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
+	LDFLAGS="%{!?debug:-s}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
