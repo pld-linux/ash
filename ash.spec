@@ -11,9 +11,11 @@ Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
 Source0:	ftp://ftp.pld.org.pl/people/malekith/%{name}-linux-%{version}.tar.gz
+Patch0:		%{name}-Makefile.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
+BuildRequires:	uClibc-devel-BOOT
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
@@ -98,13 +100,16 @@ Version for bootdisk
 
 %prep
 %setup -q -n ash-linux-%{version}
+%patch -p1
 
 %build
-# build with dietlibc - does not work
 # so far use static version linked with glibc
-#%{__make} CFLAGS="-I/usr/lib/bootdisk%{_includedir}" OPT_FLAGS="-Os"
-#%{__make} sh-BOOT LDFLAGS=""
-#%{__make} clean
+%{__make} \
+	OPT_FLAGS="-I/usr/lib/bootdisk%{_includedir} -Os" \
+	LDFLAGS="-nostdlib -s" \
+	LDLIBS="%{_libdir}/bootdisk%{_libdir}/crt0.o %{_libdir}/bootdisk%{_libdir}/libc.a -lgcc"
+mv -f sh ash.BOOT
+%{__make} clean
 
 %{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	LDFLAGS="-static %{!?debug:-s}"
@@ -122,7 +127,7 @@ install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
 install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
 #install sh-BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
-install -s ash.static $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
+install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/%{_bindir}/ash
 
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
