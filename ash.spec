@@ -66,7 +66,7 @@ gzip -9nf $RPM_BUILD_ROOT/usr/man/man1/*
 
 %post
 umask 022
-echo "/bin/ash\n/bin/bsh"" >> /etc/shells
+echo "/bin/ash\n/bin/bsh" >> /etc/shells
 cat /etc/shells | sort -u > /etc/shells.new
 mv /etc/shells.new /etc/shells
 
@@ -91,7 +91,7 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%deffatr(644,root,root,755)
+%defattr(644,root,root,755)
 %attr(755,root,root) /bin/*
 /usr/man/man1/*
 
