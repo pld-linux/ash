@@ -14,6 +14,7 @@ Patch0:		ash-make.patch
 Patch1:		ash-mknodes.patch
 Prereq:		fileutils
 Prereq:		grep
+BuildRequires:	glibc-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
@@ -33,7 +34,7 @@ commandes standard du shell Bourne et a l'avantage de les gérer tout
 en restant considérablement plus petit que bash.
 
 %description -l pl
-Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe
+Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
 komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
 
 %description -l tr
@@ -69,7 +70,7 @@ commandes standard du shell Bourne et a l'avantage de les gérer tout
 en restant considérablement plus petit que bash.
 
 %description static -l pl
-Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe
+Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
 komendy shell'a Bourne'a i jest mniejszy ni¿ bash.
 
 %description static -l tr
