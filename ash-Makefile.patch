@@ -1,0 +1,12 @@
+diff -Nur --exclude *~ ash-linux-0.3.1/Makefile ash-linux-0.3.1.new/Makefile
+--- ash-linux-0.3.1/Makefile	Fri Jan 19 09:52:26 2001
++++ ash-linux-0.3.1.new/Makefile	Fri Apr 13 19:21:17 2001
+@@ -23,7 +23,7 @@
+ all: $(PROG)
+ 
+ $(PROG): build-tools $(GENSRCS) $(GENHDRS) $(OBJS)
+-	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS)
++	$(CC) $(LDFLAGS) -o $(PROG) $(OBJS) $(LDLIBS)
+ 	
+ lex.yy.c: arith_lex.l
+ 	flex -8 $< 
