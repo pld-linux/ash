@@ -4,7 +4,7 @@
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
-Summary(pl):	Ma³y shell bourne'a 
+Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
@@ -13,7 +13,7 @@ License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Source:      	%{name}-%{version}.tar.gz
+Source:		%{name}-%{version}.tar.gz
 Patch0:		%{name}-builtin.patch
 Patch1:		%{name}-echo.patch
 Patch2:		%{name}-getcwd.patch
@@ -35,8 +35,8 @@ Patch17:	%{name}-debian.patch
 Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
-Prereq:		fileutils
-Prereq:		grep
+PreReq:		fileutils
+PreReq:		grep
 BuildRequires:	glibc-static
 BuildRequires:	flex
 BuildRequires:	byacc
@@ -81,13 +81,13 @@ avantajýna sahiptir.
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
-Summary(pl):	Ma³y shell bourne'a 
+Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Prereq:		fileutils
-Prereq:		grep
+PreReq:		fileutils
+PreReq:		grep
 Conflicts:	mkinitrd <= 1.7
 
 %description static
@@ -118,7 +118,7 @@ avantajýna sahiptir.
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne réduit de Berkeley
-Summary(pl):	Ma³y shell bourne'a 
+Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -129,6 +129,11 @@ ash is a bourne shell clone from Berkeley. It supports all of the
 standard Bourne shell commands and has the advantage of supporting
 them while remaining considerably smaller than bash.
 Version for embedded systems.
+
+%description embed -l pl
+Ash jest klonem shell'a Bourne'a z Berkeley. Obs³uguje standardowe
+komendy shell'a Bourne'a i jest mniejszy ni¿ bash. Wersja dla systemów
+osadzonych.
 
 %prep
 %setup -q
@@ -200,47 +205,47 @@ ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
 
 %post
 if [ ! -f /etc/shells ]; then
-        echo "%{_bindir}/ash" > /etc/shells
-        echo "%{_bindir}/bsh" >> /etc/shells
+	echo "%{_bindir}/ash" > /etc/shells
+	echo "%{_bindir}/bsh" >> /etc/shells
 else
-        if ! grep -q '^%{_bindir}/ash$' /etc/shells ; then
-                echo "%{_bindir}/ash" >> /etc/shells
-        fi
-        if ! grep -q '^%{_bindir}/bsh$' /etc/shells ; then
-                echo "%{_bindir}/bsh" >> /etc/shells
-        fi
+	if ! grep -q '^%{_bindir}/ash$' /etc/shells ; then
+		echo "%{_bindir}/ash" >> /etc/shells
+	fi
+	if ! grep -q '^%{_bindir}/bsh$' /etc/shells ; then
+		echo "%{_bindir}/bsh" >> /etc/shells
+	fi
 fi
 
 %post static
 if [ ! -f /etc/shells ]; then
-        echo "%{_bindir}/ash.static" >> /etc/shells
+	echo "%{_bindir}/ash.static" >> /etc/shells
 else
-        if ! grep -q '^%{_bindir}/ash.static$' /etc/shells ; then
-                echo "%{_bindir}/ash.static" >> /etc/shells
-        fi
+	if ! grep -q '^%{_bindir}/ash.static$' /etc/shells ; then
+		echo "%{_bindir}/ash.static" >> /etc/shells
+	fi
 fi
 
 %preun
 if [ "$1" = 0 ]; then
-        grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
-        mv -f /etc/shells.new /etc/shells
+	grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
+	mv -f /etc/shells.new /etc/shells
 fi
 
 %preun static
 if [ "$1" = 0 ]; then
-        grep -v '^%{_bindir}/ash\.static$' /etc/shells > /etc/shells.new
-        mv -f /etc/shells.new /etc/shells
+	grep -v '^%{_bindir}/ash\.static$' /etc/shells > /etc/shells.new
+	mv -f /etc/shells.new /etc/shells
 fi
 
 %verifyscript
 for n in ash bsh ; do
-    echo -n "Looking for $n in /etc/shells... "
-    if ! grep -q "^%{_bindir}/${n}\$" /etc/shells ; then
-	echo "missing"
-	echo "${n} missing from /etc/shells" >&2
-    else
-	echo "found"
-    fi
+	echo -n "Looking for $n in /etc/shells... "
+	if ! grep -q "^%{_bindir}/${n}\$" /etc/shells ; then
+		echo "missing"
+		echo "${n} missing from /etc/shells" >&2
+	else
+		echo "found"
+	fi
 done
 
 %verifyscript static
