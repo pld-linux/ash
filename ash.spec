@@ -5,7 +5,9 @@ Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne rИduit de Berkeley
 Summary(pl):	MaЁy shell bourne'a
+Summary(ru):	Облегченная версия Bourne shell (sh)
 Summary(tr):	Ufak bir bourne kabuПu
+Summary(uk):	Полегшена верс╕я Bourne shell (sh)
 Name:		ash
 Version:	0.4.0
 Release:	8
@@ -62,10 +64,26 @@ en restant considИrablement plus petit que bash.
 Ash jest klonem shella Bourne'a z Berkeley. ObsЁuguje standardowe
 komendy shella Bourne'a i jest mniejszy ni© bash.
 
+%description -l ru
+Шелл - это базовая системная программа, которая интерпретирует команды
+пользователя, вводимые с клавиатуры или при помощи мыши. Ash - это
+клон Bourne shell (sh) из Беркли. Ash поддерживает все стандартные
+команды шелла sh, будучи значительно меньше чем sh. В ash отсутствуют
+некоторые возможности Bourne shell (например, история команд), но он
+требует значительно меньше памяти.
+
 %description -l tr
 ash, Berkeley'in bir bourne kabuПu kopyasЩdЩr. Standart bourne kabuПu
 komutlarЩnЩn tЭmЭnЭ destekler ve bash kabuПundan daha kЭГЭk olma
 avantajЩna sahiptir.
+
+%description -l uk
+Шел - це базова системна програма, котра ╕нтерпрету╓ команди
+користувача, як╕ вводяться з клав╕атури або за допомогою миш╕. Ash -
+це клон Bourne shell (sh) з Беркл╕. Ash п╕дтриму╓ ус╕ стандартн╕
+команди шела sh, будучи значно меншим н╕ж sh. В ash в╕дсутн╕ деяк╕
+можливост╕ Bourne shell (наприклад, ╕стор╕я команд), зате в╕н вимага╓
+значно менше пам'ят╕.
 
 %package static
 Summary:	Small bourne shell from Berkeley
