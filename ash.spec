@@ -38,7 +38,9 @@ Prereq:		grep
 BuildRequires:	glibc-static
 BuildRequires:	flex
 BuildRequires:	byacc
-%{?BOOT:BuildRequires:	uClibc-devel-BOOT}
+%if %{?BOOT:1}%{!?BOOT:0}
+BuildRequires:	uClibc-devel-BOOT >= 20000521
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
@@ -136,7 +138,7 @@ Version for bootdisk
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
+#%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -151,6 +153,9 @@ Version for bootdisk
 %build
 # BOOT
 %if %{?BOOT:1}%{!?BOOT:0}
+# some of this utilities does not compile with uClibc
+# and it is not necessary
+%{__make} mksignames mkbuiltins mknodes mksignames mksyntax mktokens
 %{__make} \
 	OPT_FLAGS="-I/usr/lib/bootdisk%{_includedir} -Os" \
 	LDFLAGS="-nostdlib %{rpmldflags}" \
@@ -158,6 +163,9 @@ Version for bootdisk
 mv -f sh ash.BOOT
 %{__make} clean
 %endif
+
+# this patch imposes memory buffers - uClibc lacks them
+patch -p1 <%{PATCH10}
 
 # other
 %{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"
@@ -170,7 +178,7 @@ rm -rf $RPM_BUILD_ROOT
 # BOOT
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT/usr/lib/bootdisk/bin
-install ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
+install -s ash.BOOT $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/ash
 ln -sf ash $RPM_BUILD_ROOT/usr/lib/bootdisk/bin/sh
 %endif
 
