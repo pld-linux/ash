@@ -39,7 +39,7 @@ Patch17:	%{name}-debian.patch
 Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
-%{?_with_dietlibc:Patch21:	%{name}-dietlibc.patch}
+Patch21:	%{name}-dietlibc.patch
 PreReq:		fileutils
 PreReq:		grep
 %{!?_without_static:BuildRequires:	glibc-static}
