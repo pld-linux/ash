@@ -5,19 +5,20 @@ Summary(pl):	Ma造 shell bourne'a
 Summary(tr):	Ufak bir bourne kabu繠
 Name:		ash
 Version:	0.2
-Release:	25
+Release:	27
 License:	BSD
-Group:		Shells
-Group(pl):	Pow這ki
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow這ki
 Source0:	ftp://sunsite.unc.edu/pub/Linux/system/shells/%{name}-linux-%{version}.tar.gz
 Patch0:		%{name}-make.patch
 Patch1:		%{name}-mknodes.patch
-Patch2:		ash-fd.patch
-Patch3:		ash-exit.patch
-Patch4:		ash-echo.patch
-Patch5:		ash-mksyntax.patch
-Patch6:		ash-linux-sighup.patch
-Patch7:		ash-linux-mkinit.patch
+Patch2:		%{name}-fd.patch
+Patch3:		%{name}-exit.patch
+Patch4:		%{name}-echo.patch
+Patch5:		%{name}-mksyntax.patch
+Patch6:		%{name}-linux-sighup.patch
+Patch7:		%{name}-linux-mkinit.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
@@ -56,8 +57,9 @@ Summary(de):	Kleine Bourne-Shell von Berkeley
 Summary(fr):	Shell Bourne r嶮uit de Berkeley
 Summary(pl):	Ma造 shell bourne'a 
 Summary(tr):	Ufak bir bourne kabu繠
-Group:		Shells
-Group(pl):	Pow這ki
+Group:		Applications/Shells
+Group(de):	Applikationen/Shells
+Group(pl):	Aplikacje/Pow這ki
 Prereq:		fileutils
 Prereq:		grep
 Conflicts:	mkinitrd <= 1.7
@@ -98,9 +100,9 @@ avantaj�na sahiptir.
 %patch7 -p1
 
 %build
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS" STATIC=-static
+%{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" STATIC=-static
 mv -f sh ash.static
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS"
+%{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,8 +113,6 @@ install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
-
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %post
 if [ ! -f /etc/shells ]; then
