@@ -6,14 +6,33 @@ Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a 
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
-Version:	0.3.1
+Version:	0.4.0
 Release:	1
 License:	BSD
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
-Source0:	ftp://ftp.pld.org.pl/people/malekith/%{name}-linux-%{version}.tar.gz
-Patch0:		%{name}-Makefile.patch
+Source:      	ash-%{version}.tar.gz
+Patch0:		ash-builtin.patch
+Patch1:		ash-echo.patch
+Patch2:		ash-getcwd.patch
+Patch3:		ash-getopt.patch
+Patch4:		ash-glob.patch
+Patch5:		ash-jobs.patch
+Patch6:		ash-kill.patch
+Patch7:		ash-makefile.patch
+Patch8:		ash-manpage.patch
+Patch9:		ash-hetio.patch
+Patch10:	ash-memout.patch
+Patch11:	ash-misc.patch
+Patch12:	ash-redir.patch
+Patch13:	ash-setmode.patch
+Patch14:	ash-syntax.patch
+Patch15:	ash-test.patch
+Patch16:	ash-times.patch
+Patch17:	ash-debian.patch
+Patch18:	ash-ppid.patch
+Patch19:	ash-freebsd.patch
 Prereq:		fileutils
 Prereq:		grep
 BuildRequires:	glibc-static
@@ -104,8 +123,28 @@ Version for bootdisk
 %endif
 
 %prep
-%setup -q -n ash-linux-%{version}
-%patch -p1
+%setup -q -n ash-%{version}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+# this is mainly for information, maybe add changelog to %doc?
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 # BOOT
