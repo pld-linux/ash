@@ -5,9 +5,10 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:        	ash
 Version:     	0.2
-Release:     	16
+Release:     	17
 Copyright:   	BSD
 Group:       	Shells
+Group(pl):	Pow³oki
 Source:      	ftp://sunsite.unc.edu/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
 Patch0:       	ash-make.patch
 Patch1:		ash-mknodes.patch
@@ -31,7 +32,7 @@ standard du shell Bourne et a l'avantage de les gérer tout en restant
 considérablement plus petit que bash.
 
 %description -l pl
-Ash jest klonem shell'a bourne'a z Berkely. Obs³uguje standardowe komendy
+Ash jest klonem shell'a Bourne'a z Berkely. Obs³uguje standardowe komendy
 shell'a Bourne'a i jest mniejszy ni¿ bash. 
 
 %description -l tr
@@ -90,10 +91,17 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%attr(755, root, root) /bin/*
+%deffatr(644,root,root,755)
+%attr(755,root,root) /bin/*
 /usr/man/man1/*
 
 %changelog
+* Wed Apr 21 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [0.2-17]
+- added Group(pl),
+- added full %defattr description,
+- recompiled on rpm 3.
+
 * Thu Mar 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [0.2-16]
 - removed man group from man pages.
