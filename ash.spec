@@ -53,8 +53,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,usr/man/man1}
 
 install sh $RPM_BUILD_ROOT/bin/ash
-install sh.1 $RPM_BUILD_ROOT/usr/man/man1/ash.1
-echo ".so ash.1" > $RPM_BUILD_ROOT/usr/man/man1/bsh.1
+install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
+echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/bin/bsh
 
 rm -f sh
@@ -62,7 +62,7 @@ make STATIC=-static
 
 install sh $RPM_BUILD_ROOT/bin/ash.static
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man1/*
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man1/*
 
 %post
 umask 022
@@ -93,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/*
-/usr/man/man1/*
+%{_mandir}/man1/*
 
 %changelog
 * Wed Apr 21 1999 Piotr Czerwiñski <pius@pld.org.pl>
