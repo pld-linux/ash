@@ -11,7 +11,7 @@ Version:	0.4.0
 Release:	5
 License:	BSD
 Group:		Applications/Shells
-Source:		%{name}-%{version}.tar.gz
+Source0:	%{name}-%{version}.tar.gz
 Patch0:		%{name}-builtin.patch
 Patch1:		%{name}-echo.patch
 Patch2:		%{name}-getcwd.patch
@@ -121,8 +121,8 @@ Group:		Applications/Shells
 %description embed
 ash is a bourne shell clone from Berkeley. It supports all of the
 standard Bourne shell commands and has the advantage of supporting
-them while remaining considerably smaller than bash.
-Version for embedded systems.
+them while remaining considerably smaller than bash. Version for
+embedded systems.
 
 %description embed -l pl
 Ash jest klonem shella Bourne'a z Berkeley. Obs³uguje standardowe
