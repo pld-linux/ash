@@ -40,12 +40,12 @@ Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
 Patch21:	%{name}-dietlibc.patch
-PreReq:		fileutils
-PreReq:		grep
 %{!?_without_static:BuildRequires:	glibc-static}
 %{?_with_dietlibc:BuildRequires:	dietlibc-static}
-BuildRequires:	flex
 BuildRequires:	byacc
+BuildRequires:	flex
+Requires(post,preun,verify):	grep
+Requires(preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Conflicts:	mkinitrd <= 1.7
 
@@ -98,8 +98,8 @@ Summary(fr):	Shell Bourne réduit de Berkeley
 Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Group:		Applications/Shells
-PreReq:		fileutils
-PreReq:		grep
+Requires(post,preun,verify):	grep
+Requires(preun):	fileutils
 Conflicts:	mkinitrd <= 1.7
 
 %description static
@@ -170,7 +170,11 @@ install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
+umask 022
 if [ ! -f /etc/shells ]; then
 	echo "%{_bindir}/ash" > /etc/shells
 	echo "%{_bindir}/bsh" >> /etc/shells
@@ -183,7 +187,15 @@ else
 	fi
 fi
 
+%preun
+if [ "$1" = 0 ]; then
+	umask 022
+	grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
+	mv -f /etc/shells.new /etc/shells
+fi
+
 %post static
+umask 022
 if [ ! -f /etc/shells ]; then
 	echo "%{_bindir}/ash.static" >> /etc/shells
 else
@@ -192,14 +204,9 @@ else
 	fi
 fi
 
-%preun
-if [ "$1" = 0 ]; then
-	grep -v '^%{_bindir}/ash$' /etc/shells | grep -v '^%{_bindir}/bsh$' > /etc/shells.new
-	mv -f /etc/shells.new /etc/shells
-fi
-
 %preun static
 if [ "$1" = 0 ]; then
+	umask 022
 	grep -v '^%{_bindir}/ash\.static$' /etc/shells > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
@@ -223,9 +230,6 @@ if ! grep -q '^%{_bindir}/ash\.static$' /etc/shells ; then
 else
 	echo "found"
 fi
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
