@@ -100,9 +100,9 @@ avantajýna sahiptir.
 %patch7 -p1
 
 %build
-%{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" STATIC=-static
+%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" STATIC=-static
 mv -f sh ash.static
-%{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
+%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
