@@ -11,8 +11,6 @@ Version:	0.4.0
 Release:	5
 License:	BSD
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow這ki
 Source:		%{name}-%{version}.tar.gz
 Patch0:		%{name}-builtin.patch
 Patch1:		%{name}-echo.patch
@@ -84,8 +82,6 @@ Summary(fr):	Shell Bourne r嶮uit de Berkeley
 Summary(pl):	Ma造 shell bourne'a
 Summary(tr):	Ufak bir bourne kabu繠
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow這ki
 PreReq:		fileutils
 PreReq:		grep
 Conflicts:	mkinitrd <= 1.7
@@ -121,8 +117,6 @@ Summary(fr):	Shell Bourne r嶮uit de Berkeley
 Summary(pl):	Ma造 shell bourne'a
 Summary(tr):	Ufak bir bourne kabu繠
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow這ki
 
 %description embed
 ash is a bourne shell clone from Berkeley. It supports all of the
