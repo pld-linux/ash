@@ -5,10 +5,10 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:        	ash
 Version:     	0.2
-Release:     	15
+Release:     	16
 Copyright:   	BSD
 Group:       	Shells
-Source:      	ftp://sunsite.unc.edu:/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
+Source:      	ftp://sunsite.unc.edu/pub/Linux/system/shells/ash-linux-%{version}.tar.gz
 Patch0:       	ash-make.patch
 Patch1:		ash-mknodes.patch
 Prereq:      	fileutils
@@ -65,8 +65,7 @@ gzip -9nf $RPM_BUILD_ROOT/usr/man/man1/*
 
 %post
 umask 022
-echo "/bin/ash" >> /etc/shells
-echo "/bin/bsh" >> /etc/shells
+echo "/bin/ash\n/bin/bsh"" >> /etc/shells
 cat /etc/shells | sort -u > /etc/shells.new
 mv /etc/shells.new /etc/shells
 
@@ -92,9 +91,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %attr(755, root, root) /bin/*
-%attr(644, root,  man) /usr/man/man1/*
+/usr/man/man1/*
 
 %changelog
+* Thu Mar 25 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
+  [0.2-16]
+- removed man group from man pages.
+
 * Wed Dec 23 1998 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [0.2-15]
 - simplification in %postun and %post,
