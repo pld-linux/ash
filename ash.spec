@@ -1,4 +1,3 @@
-# Env: 123
 # Branch: HEAD
 # conditional build:
 # if BOOT is defined, build BOOT package too
