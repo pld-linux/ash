@@ -1,3 +1,5 @@
+# conditional build
+# --without static
 # Branch: HEAD
 Summary:	Small bourne shell from Berkeley
 Summary(de):	Kleine Bourne-Shell von Berkeley
@@ -6,7 +8,7 @@ Summary(pl):	Ma³y shell bourne'a
 Summary(tr):	Ufak bir bourne kabuðu
 Name:		ash
 Version:	0.4.0
-Release:	6
+Release:	7
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
@@ -33,7 +35,7 @@ Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
 PreReq:		fileutils
 PreReq:		grep
-BuildRequires:	glibc-static
+%{!?_without_static:BuildRequires:	glibc-static}
 BuildRequires:	flex
 BuildRequires:	byacc
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -127,16 +129,16 @@ avantajýna sahiptir.
 
 %build
 
-%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"
-mv -f sh ash.static
-%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}"
+%{!?_without_static:%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}"}
+%{!?_without_static:mv -f sh ash.static}
+%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{%{_bindir},%{_mandir}/man1}
 install sh $RPM_BUILD_ROOT%{_bindir}/ash
-install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static
+%{!?_without_static:install ash.static $RPM_BUILD_ROOT%{_bindir}/ash.static}
 install sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ash.1
 echo ".so ash.1" > $RPM_BUILD_ROOT%{_mandir}/man1/bsh.1
 ln -sf ash $RPM_BUILD_ROOT/%{_bindir}/bsh
@@ -204,6 +206,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/bsh
 %{_mandir}/man1/*
 
-%files static
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ash.static
+%{!?_without_static:%files static}
+%{!?_without_static:%defattr(644,root,root,755)}
+%{!?_without_static:%attr(755,root,root) %{_bindir}/ash.static}
