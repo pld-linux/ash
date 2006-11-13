@@ -53,7 +53,7 @@ BuildRequires:	byacc
 %{?with_dietlibc:BuildRequires:	dietlibc-devel}
 BuildRequires:	flex
 %if %{with static}
-%{?without_uClibc:BuildRequires: glibc-static}
+%{!?with_uClibc:BuildRequires: glibc-static}
 %{?with_uClibc:BuildRequires: uClibc-static > 2:0.9.27-1}
 %endif
 %{?with_uClibc:BuildRequires: uClibc-devel > 2:0.9.27-1}
