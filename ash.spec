@@ -10,16 +10,16 @@
 %endif
 
 Summary:	Small bourne shell from Berkeley
-Summary(de):	Kleine Bourne-Shell von Berkeley
-Summary(es):	PequeЯa shell bourne de Berkeley
-Summary(fr):	Shell Bourne rИduit de Berkeley
-Summary(pl):	MaЁy shell bourne'a
-Summary(pt_BR):	Pequena shell bourne de Berkeley
-Summary(ru):	Облегченная версия Bourne shell (sh)
-Summary(tr):	Ufak bir bourne kabuПu
-Summary(uk):	Полегшена верс╕я Bourne shell (sh)
-Summary(zh_CN):	[о╣мЁ]Berkeley╣дн╒пмBourne Shell
-Summary(zh_TW):	[-A╗t$)B╡н]Berkeley╙╨-A╥L$)B╚╛Bourne Shell
+Summary(de.UTF-8):   Kleine Bourne-Shell von Berkeley
+Summary(es.UTF-8):   Pequeц╠a shell bourne de Berkeley
+Summary(fr.UTF-8):   Shell Bourne rц╘duit de Berkeley
+Summary(pl.UTF-8):   Maе┌y shell bourne'a
+Summary(pt_BR.UTF-8):   Pequena shell bourne de Berkeley
+Summary(ru.UTF-8):   п·п╠п╩п╣пЁя┤п╣п╫п╫п╟я▐ п╡п╣я─я│п╦я▐ Bourne shell (sh)
+Summary(tr.UTF-8):   Ufak bir bourne kabuд÷u
+Summary(uk.UTF-8):   п÷п╬п╩п╣пЁя┬п╣п╫п╟ п╡п╣я─я│я√я▐ Bourne shell (sh)
+Summary(zh_CN.UTF-8):   [ГЁ╩Г╩÷]BerkeleyГ └Е╬╝Е·▀Bourne Shell
+Summary(zh_TW.UTF-8):   [-AГЁ╩$)BГ╣╠]BerkeleyГ └-AЕ╬╝$)BЕ·▀Bourne Shell
 Name:		ash
 Version:	0.4.0
 Release:	10
@@ -69,57 +69,57 @@ ash is a bourne shell clone from Berkeley. It supports all of the
 standard Bourne shell commands and has the advantage of supporting
 them while remaining considerably smaller than bash.
 
-%description -l de
+%description -l de.UTF-8
 ash ist ein Bourne-Shell-Clone aus Berkeley, der alle
-Standard-Bourne-Shell- Befehle unterstЭtzt und dennoch erheblich
+Standard-Bourne-Shell- Befehle unterstц╪tzt und dennoch erheblich
 weniger Platz beansprucht als bash.
 
-%description -l es
+%description -l es.UTF-8
 Ash es un clon del shell bourne de Berkeley. Soporta todos los
-comandos padrСn de la Bourne shell y tiene la ventaja de soportarlos
-con un tamaЯo considerablemente menor del que bash.
+comandos padrцЁn de la Bourne shell y tiene la ventaja de soportarlos
+con un tamaц╠o considerablemente menor del que bash.
 
-%description -l fr
-ash est un clone Berkeley du shell Bourne. Il gХre toutes les
-commandes standard du shell Bourne et a l'avantage de les gИrer tout
-en restant considИrablement plus petit que bash.
+%description -l fr.UTF-8
+ash est un clone Berkeley du shell Bourne. Il gц╗re toutes les
+commandes standard du shell Bourne et a l'avantage de les gц╘rer tout
+en restant considц╘rablement plus petit que bash.
 
-%description -l pl
-Ash jest klonem shella Bourne'a z Berkeley. ObsЁuguje standardowe
-komendy shella Bourne'a i jest mniejszy ni© bash.
+%description -l pl.UTF-8
+Ash jest klonem shella Bourne'a z Berkeley. Obsе┌uguje standardowe
+komendy shella Bourne'a i jest mniejszy niе╪ bash.
 
-%description -l pt_BR
-ash И um clone do shell bourne de Berkeley. Ele suporta todos os
-comandos-padrЦo da Bourne shell e tem a vantagem de suportА-los com um
+%description -l pt_BR.UTF-8
+ash ц╘ um clone do shell bourne de Berkeley. Ele suporta todos os
+comandos-padrцёo da Bourne shell e tem a vantagem de suportц║-los com um
 tamanho consideravelmente menor do que bash.
 
-%description -l ru
-Шелл - это базовая системная программа, которая интерпретирует команды
-пользователя, вводимые с клавиатуры или при помощи мыши. Ash - это
-клон Bourne shell (sh) из Беркли. Ash поддерживает все стандартные
-команды шелла sh, будучи значительно меньше чем sh. В ash отсутствуют
-некоторые возможности Bourne shell (например, история команд), но он
-требует значительно меньше памяти.
+%description -l ru.UTF-8
+п╗п╣п╩п╩ - я█я┌п╬ п╠п╟п╥п╬п╡п╟я▐ я│п╦я│я┌п╣п╪п╫п╟я▐ п©я─п╬пЁя─п╟п╪п╪п╟, п╨п╬я┌п╬я─п╟я▐ п╦п╫я┌п╣я─п©я─п╣я┌п╦я─я┐п╣я┌ п╨п╬п╪п╟п╫п╢я▀
+п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐, п╡п╡п╬п╢п╦п╪я▀п╣ я│ п╨п╩п╟п╡п╦п╟я┌я┐я─я▀ п╦п╩п╦ п©я─п╦ п©п╬п╪п╬я┴п╦ п╪я▀я┬п╦. Ash - я█я┌п╬
+п╨п╩п╬п╫ Bourne shell (sh) п╦п╥ п▒п╣я─п╨п╩п╦. Ash п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п╡я│п╣ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╣
+п╨п╬п╪п╟п╫п╢я▀ я┬п╣п╩п╩п╟ sh, п╠я┐п╢я┐я┤п╦ п╥п╫п╟я┤п╦я┌п╣п╩я▄п╫п╬ п╪п╣п╫я▄я┬п╣ я┤п╣п╪ sh. п▓ ash п╬я┌я│я┐я┌я│я┌п╡я┐я▌я┌
+п╫п╣п╨п╬я┌п╬я─я▀п╣ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌п╦ Bourne shell (п╫п╟п©я─п╦п╪п╣я─, п╦я│я┌п╬я─п╦я▐ п╨п╬п╪п╟п╫п╢), п╫п╬ п╬п╫
+я┌я─п╣п╠я┐п╣я┌ п╥п╫п╟я┤п╦я┌п╣п╩я▄п╫п╬ п╪п╣п╫я▄я┬п╣ п©п╟п╪я▐я┌п╦.
 
-%description -l tr
-ash, Berkeley'in bir bourne kabuПu kopyasЩdЩr. Standart bourne kabuПu
-komutlarЩnЩn tЭmЭnЭ destekler ve bash kabuПundan daha kЭГЭk olma
-avantajЩna sahiptir.
+%description -l tr.UTF-8
+ash, Berkeley'in bir bourne kabuд÷u kopyasд╠dд╠r. Standart bourne kabuд÷u
+komutlarд╠nд╠n tц╪mц╪nц╪ destekler ve bash kabuд÷undan daha kц╪ц╖ц╪k olma
+avantajд╠na sahiptir.
 
-%description -l uk
-Шел - це базова системна програма, котра ╕нтерпрету╓ команди
-користувача, як╕ вводяться з клав╕атури або за допомогою миш╕. Ash -
-це клон Bourne shell (sh) з Беркл╕. Ash п╕дтриму╓ ус╕ стандартн╕
-команди шела sh, будучи значно меншим н╕ж sh. В ash в╕дсутн╕ деяк╕
-можливост╕ Bourne shell (наприклад, ╕стор╕я команд), зате в╕н вимага╓
-значно менше пам'ят╕.
+%description -l uk.UTF-8
+п╗п╣п╩ - я├п╣ п╠п╟п╥п╬п╡п╟ я│п╦я│я┌п╣п╪п╫п╟ п©я─п╬пЁя─п╟п╪п╟, п╨п╬я┌я─п╟ я√п╫я┌п╣я─п©я─п╣я┌я┐я■ п╨п╬п╪п╟п╫п╢п╦
+п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟, я▐п╨я√ п╡п╡п╬п╢я▐я┌я▄я│я▐ п╥ п╨п╩п╟п╡я√п╟я┌я┐я─п╦ п╟п╠п╬ п╥п╟ п╢п╬п©п╬п╪п╬пЁп╬я▌ п╪п╦я┬я√. Ash -
+я├п╣ п╨п╩п╬п╫ Bourne shell (sh) п╥ п▒п╣я─п╨п╩я√. Ash п©я√п╢я┌я─п╦п╪я┐я■ я┐я│я√ я│я┌п╟п╫п╢п╟я─я┌п╫я√
+п╨п╬п╪п╟п╫п╢п╦ я┬п╣п╩п╟ sh, п╠я┐п╢я┐я┤п╦ п╥п╫п╟я┤п╫п╬ п╪п╣п╫я┬п╦п╪ п╫я√п╤ sh. п▓ ash п╡я√п╢я│я┐я┌п╫я√ п╢п╣я▐п╨я√
+п╪п╬п╤п╩п╦п╡п╬я│я┌я√ Bourne shell (п╫п╟п©я─п╦п╨п╩п╟п╢, я√я│я┌п╬я─я√я▐ п╨п╬п╪п╟п╫п╢), п╥п╟я┌п╣ п╡я√п╫ п╡п╦п╪п╟пЁп╟я■
+п╥п╫п╟я┤п╫п╬ п╪п╣п╫я┬п╣ п©п╟п╪'я▐я┌я√.
 
 %package static
 Summary:	Small bourne shell from Berkeley
-Summary(de):	Kleine Bourne-Shell von Berkeley
-Summary(fr):	Shell Bourne rИduit de Berkeley
-Summary(pl):	MaЁy shell bourne'a
-Summary(tr):	Ufak bir bourne kabuПu
+Summary(de.UTF-8):   Kleine Bourne-Shell von Berkeley
+Summary(fr.UTF-8):   Shell Bourne rц╘duit de Berkeley
+Summary(pl.UTF-8):   Maе┌y shell bourne'a
+Summary(tr.UTF-8):   Ufak bir bourne kabuд÷u
 Group:		Applications/Shells
 Requires(post,preun,verify):	grep
 Requires(preun):	fileutils
@@ -130,24 +130,24 @@ ash is a bourne shell clone from Berkeley. It supports all of the
 standard Bourne shell commands and has the advantage of supporting
 them while remaining considerably smaller than bash.
 
-%description static -l de
+%description static -l de.UTF-8
 ash ist ein Bourne-Shell-Clone aus Berkeley, der alle
-Standard-Bourne-Shell- Befehle unterstЭtzt und dennoch erheblich
+Standard-Bourne-Shell- Befehle unterstц╪tzt und dennoch erheblich
 weniger Platz beansprucht als bash.
 
-%description static -l fr
-ash est un clone Berkeley du shell Bourne. Il gХre toutes les
-commandes standard du shell Bourne et a l'avantage de les gИrer tout
-en restant considИrablement plus petit que bash.
+%description static -l fr.UTF-8
+ash est un clone Berkeley du shell Bourne. Il gц╗re toutes les
+commandes standard du shell Bourne et a l'avantage de les gц╘rer tout
+en restant considц╘rablement plus petit que bash.
 
-%description static -l pl
-Ash jest klonem shella Bourne'a z Berkeley. ObsЁuguje standardowe
-komendy shella Bourne'a i jest mniejszy ni© bash.
+%description static -l pl.UTF-8
+Ash jest klonem shella Bourne'a z Berkeley. Obsе┌uguje standardowe
+komendy shella Bourne'a i jest mniejszy niе╪ bash.
 
-%description static -l tr
-ash, Berkeley'in bir bourne kabuПu kopyasЩdЩr. Standart bourne kabuПu
-komutlarЩnЩn tЭmЭnЭ destekler ve bash kabuПundan daha kЭГЭk olma
-avantajЩna sahiptir.
+%description static -l tr.UTF-8
+ash, Berkeley'in bir bourne kabuд÷u kopyasд╠dд╠r. Standart bourne kabuд÷u
+komutlarд╠nд╠n tц╪mц╪nц╪ destekler ve bash kabuд÷undan daha kц╪ц╖ц╪k olma
+avantajд╠na sahiptir.
 
 %prep
 %setup -q
