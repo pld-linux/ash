@@ -10,16 +10,16 @@
 %endif
 
 Summary:	Small bourne shell from Berkeley
-Summary(de.UTF-8):   Kleine Bourne-Shell von Berkeley
-Summary(es.UTF-8):   Pequeña shell bourne de Berkeley
-Summary(fr.UTF-8):   Shell Bourne réduit de Berkeley
-Summary(pl.UTF-8):   Mały shell bourne'a
-Summary(pt_BR.UTF-8):   Pequena shell bourne de Berkeley
-Summary(ru.UTF-8):   Облегченная версия Bourne shell (sh)
-Summary(tr.UTF-8):   Ufak bir bourne kabuğu
-Summary(uk.UTF-8):   Полегшена версія Bourne shell (sh)
-Summary(zh_CN.UTF-8):   [系统]Berkeley的微型Bourne Shell
-Summary(zh_TW.UTF-8):   [-A系$)B統]Berkeley的-A微$)B型Bourne Shell
+Summary(de.UTF-8):	Kleine Bourne-Shell von Berkeley
+Summary(es.UTF-8):	Pequeña shell bourne de Berkeley
+Summary(fr.UTF-8):	Shell Bourne réduit de Berkeley
+Summary(pl.UTF-8):	Mały shell bourne'a
+Summary(pt_BR.UTF-8):	Pequena shell bourne de Berkeley
+Summary(ru.UTF-8):	Облегченная версия Bourne shell (sh)
+Summary(tr.UTF-8):	Ufak bir bourne kabuğu
+Summary(uk.UTF-8):	Полегшена версія Bourne shell (sh)
+Summary(zh_CN.UTF-8):	[系统]Berkeley的微型Bourne Shell
+Summary(zh_TW.UTF-8):	[-A系$)B統]Berkeley的-A微$)B型Bourne Shell
 Name:		ash
 Version:	0.4.0
 Release:	10
@@ -116,10 +116,10 @@ avantajına sahiptir.
 
 %package static
 Summary:	Small bourne shell from Berkeley
-Summary(de.UTF-8):   Kleine Bourne-Shell von Berkeley
-Summary(fr.UTF-8):   Shell Bourne réduit de Berkeley
-Summary(pl.UTF-8):   Mały shell bourne'a
-Summary(tr.UTF-8):   Ufak bir bourne kabuğu
+Summary(de.UTF-8):	Kleine Bourne-Shell von Berkeley
+Summary(fr.UTF-8):	Shell Bourne réduit de Berkeley
+Summary(pl.UTF-8):	Mały shell bourne'a
+Summary(tr.UTF-8):	Ufak bir bourne kabuğu
 Group:		Applications/Shells
 Requires(post,preun,verify):	grep
 Requires(preun):	fileutils
