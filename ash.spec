@@ -22,7 +22,7 @@ Summary(zh_CN.UTF-8):	[系统]Berkeley的微型Bourne Shell
 Summary(zh_TW.UTF-8):	[-A系$)B統]Berkeley的-A微$)B型Bourne Shell
 Name:		ash
 Version:	0.4.0
-Release:	10
+Release:	11
 License:	BSD
 Group:		Applications/Shells
 Source0:	%{name}-%{version}.tar.gz
@@ -49,6 +49,7 @@ Patch18:	%{name}-ppid.patch
 Patch19:	%{name}-freebsd.patch
 Patch20:	%{name}-sighup.patch
 Patch21:	%{name}-dietlibc.patch
+Patch22:	%{name}-extern.patch
 BuildRequires:	byacc
 %{?with_dietlibc:BuildRequires:	dietlibc-devel}
 BuildRequires:	flex
@@ -174,6 +175,7 @@ avantajına sahiptir.
 %patch19 -p1
 %patch20 -p1
 %{?_with_dietlibc:%patch21 -p1}
+%patch22 -p1
 
 %build
 

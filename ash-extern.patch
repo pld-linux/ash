@@ -1,0 +1,8 @@
+--- ash-0.4.0/hetio.h~	2007-02-14 01:25:37.000000000 +0100
++++ ash-0.4.0/hetio.h	2007-02-14 02:03:35.000000000 +0100
+@@ -18,5 +18,3 @@
+ void hetio_init(void);
+ int hetio_read_input(int fd);
+ void hetio_reset_term(void);
+-
+-extern int hetio_inter;
