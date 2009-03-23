@@ -178,14 +178,27 @@ avantajına sahiptir.
 %patch22 -p1
 
 %build
+%if %{with static}
+%{__make} \
+%if %{with dietlibc}
+	CC="diet %{__cc}" \
+%else
+%if %{with uClibc}
+	CC="%{_target_cpu}-uclibc-gcc"\
+%else
+	CC="%{__cc}"
+%endif
+%endif
+	OPT_FLAGS="%{rpmcflags} -Os" \
+	LDFLAGS="-static %{rpmldflags}"
 
-%define __cc %{_target_cpu}-pld-linux-gcc
-%{?with_dietlibc:%define __cc %{_target_cpu}-dietlibc-gcc}
-%{?with_uClibc:%define __cc %{_target_cpu}-uclibc-gcc}
+mv -f sh ash.static
+%endif
 
-%{?with_static:%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="-static %{rpmldflags}" CC="%{__cc}"}
-%{?with_static:mv -f sh ash.static}
-%{__make} OPT_FLAGS="%{rpmcflags}" LDFLAGS="%{rpmldflags}" CC="%{__cc}"
+%{__make} \
+	CC="%{__cc}" \
+	OPT_FLAGS="%{rpmcflags}" \
+	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
